@@ -33,7 +33,7 @@ logger = logging.getLogger(__name__)
 LISTING_URL = "https://www.oceaniacruises.com/cruise-finder"
 
 # URL fragments that are likely to appear in cruise data API calls.
-# Expand based on what you observe in browser DevTools Network tab.
+# Intentionally broad — we also capture ALL JSON responses to log them.
 API_URL_PATTERNS = [
     "/api/",
     "/cruises",
@@ -45,7 +45,15 @@ API_URL_PATTERNS = [
     "/availability",
     "/results",
     "oceaniacruises.com/api",
+    "/packages",
+    "/offers",
+    "/nclh",
+    "/ncl",
+    "/oceania",
 ]
+
+# Always log all intercepted JSON responses to discover the correct endpoint
+ALWAYS_LOG_RESPONSES = True
 
 # CSS selector to wait for — cruise cards should appear before we stop capturing
 CRUISE_CARD_SELECTOR = (
@@ -70,25 +78,52 @@ class OceaniaCruisesScraper(BaseScraper):
         """
         all_raw: list[dict] = []
 
-        # --- Step 1: Initial page load with response interception ---
-        responses = await self.intercept_json_responses(
-            page=page,
-            url_patterns=API_URL_PATTERNS,
-            navigate_url=LISTING_URL,
-            wait_selector=None,
-            timeout_ms=60_000,  # Oceania can be slow to load
-        )
+        # --- Step 1: Capture ALL JSON responses to discover the right endpoint ---
+        all_json_responses: list[dict] = []
 
-        if DEBUG_MODE:
+        async def capture_all_json(response):
+            ct = response.headers.get("content-type", "")
+            if "json" not in ct:
+                return
+            try:
+                body = await response.json()
+                url = response.url
+                all_json_responses.append({"url": url, "body": body})
+                if isinstance(body, dict):
+                    logger.info("JSON response: %s  keys=%s", url, list(body.keys())[:10])
+                    # Log field names of any list items to help identify cruise records
+                    for key in ("cruises", "voyages", "sailings", "results", "items",
+                                "data", "packages", "itineraries"):
+                        inner = body.get(key)
+                        if isinstance(inner, list) and inner and isinstance(inner[0], dict):
+                            logger.info("  -> %s[0] field names: %s", key,
+                                        list(inner[0].keys())[:15])
+                elif isinstance(body, list) and body and isinstance(body[0], dict):
+                    logger.info("JSON response (list): %s  [0] keys=%s",
+                                url, list(body[0].keys())[:15])
+            except Exception:
+                pass
+
+        page.on("response", capture_all_json)
+
+        logger.info("Navigating to %s", LISTING_URL)
+        await page.goto(LISTING_URL, wait_until="domcontentloaded", timeout=60_000)
+        # Wait longer for Angular app to initialize and make API calls
+        await page.wait_for_timeout(12_000)
+
+        page.remove_listener("response", capture_all_json)
+        logger.info("Total JSON responses captured: %d", len(all_json_responses))
+
+        responses = all_json_responses
+
+        if DEBUG_MODE or ALWAYS_LOG_RESPONSES:
             self._log_all_responses(responses)
 
         voyage_responses = self._filter_voyage_responses(responses)
         logger.info("Found %d potential cruise API responses on initial load", len(voyage_responses))
         all_raw.extend(voyage_responses)
 
-        # --- Step 2: Wait an extra moment for lazy-loaded content ---
-        # Oceania's cruise finder may load results in batches
-        await page.wait_for_timeout(5000)
+        # --- Step 2: Capture late-arriving responses via scroll ---
 
         # Capture any late-arriving responses by scrolling to trigger lazy loading
         extra_responses: list[dict] = []
@@ -144,9 +179,14 @@ class OceaniaCruisesScraper(BaseScraper):
                     return val
             return default
 
+        # Log the raw field names on first record to help tune the mapping
+        if not hasattr(self, '_fields_logged'):
+            self._fields_logged = True
+            logger.info("Oceania raw record field names: %s", list(raw.keys()))
+
         voyage_id = self.safe_str(
             get("cruiseCode", "voyageCode", "code", "id", "sailingCode",
-                "itineraryCode", "packageCode"),
+                "itineraryCode", "packageCode", "sailCode"),
         )
         if not voyage_id:
             logger.debug("Skipping Oceania record with no ID: keys=%s", list(raw.keys())[:5])
@@ -154,22 +194,23 @@ class OceaniaCruisesScraper(BaseScraper):
 
         voyage_name = self.safe_str(
             get("cruiseName", "voyageName", "name", "title", "itineraryName",
-                "destinationName", "description"),
+                "destinationName", "description", "packageName"),
             fallback=voyage_id,
         )
 
         ship_name = self.safe_str(
-            get("shipName", "ship", "vessel", "shipCode"),
-        )
+            get("shipName", "ship", "vessel", "shipCode", "shipFullName"),
+        ) or "Unknown Ship"  # required field — default rather than leave blank
 
         departure_port = self.safe_str(
             get("departurePort", "embarkPort", "embarkation", "startPort",
-                "homePort", "fromPort", "embarkCity"),
-        )
+                "homePort", "fromPort", "embarkCity", "embarkPortName",
+                "embarkationPortName", "departurePortName"),
+        ) or "Unknown Port"  # required field — default rather than leave blank
 
         departure_date = self.parse_date(
             get("departureDate", "startDate", "sailDate", "embarkDate",
-                "fromDate", "departDate")
+                "fromDate", "departDate", "voyageStartDate", "sailingDate")
         )
         if not departure_date:
             logger.debug("Skipping Oceania record %r — no departure date", voyage_id)
@@ -177,22 +218,25 @@ class OceaniaCruisesScraper(BaseScraper):
 
         return_date = self.parse_date(
             get("returnDate", "endDate", "disembarkDate", "arrivalDate",
-                "toDate", "debarkDate")
+                "toDate", "debarkDate", "voyageEndDate")
         )
 
         duration_nights = self.safe_int(
             get("durationNights", "duration", "nights", "numNights",
-                "voyageDuration", "lengthOfCruise")
+                "voyageDuration", "lengthOfCruise", "durationDays",
+                "sailingNights", "tripDuration")
         )
         if duration_nights is None:
             duration_nights = self._compute_duration(departure_date, return_date)
-        if duration_nights is None:
-            duration_nights = 0
+        # Must be >= 1 per schema; default to 1 if unknown
+        if duration_nights is None or duration_nights < 1:
+            duration_nights = 1
 
         region = self.safe_str(
             get("region", "destination", "area", "zone", "itineraryRegion",
-                "destinationRegion", "cruiseArea"),
-        )
+                "destinationRegion", "cruiseArea", "marketCode",
+                "destinationName", "itineraryType"),
+        ) or "Unknown Region"  # required field — default rather than leave blank
 
         voyage_url = self.safe_str(
             get("url", "cruiseUrl", "voyageUrl", "link", "detailUrl", "bookingUrl"),
@@ -239,12 +283,19 @@ class OceaniaCruisesScraper(BaseScraper):
                     continue
 
             if isinstance(body, dict):
+                # Check known wrapper keys
                 for key in ("cruises", "voyages", "sailings", "results",
-                            "items", "data", "itineraries", "packages"):
+                            "items", "data", "itineraries", "packages",
+                            "offers", "sailingList", "cruiseList"):
                     inner = body.get(key)
                     if isinstance(inner, list) and inner and self._looks_like_cruise(inner[0]):
                         voyage_responses.append(resp)
                         break
+                else:
+                    # Also log any large dict responses for manual inspection
+                    if len(body) > 3:
+                        logger.debug("Non-matching dict response keys: %s from %s",
+                                     list(body.keys())[:8], resp.get("url", "?"))
 
         return voyage_responses
 
@@ -253,11 +304,16 @@ class OceaniaCruisesScraper(BaseScraper):
         if not isinstance(obj, dict):
             return False
         cruise_keys = {
-            "cruiseCode", "voyageCode", "code", "sailCode",
+            # Standard names
+            "cruiseCode", "voyageCode", "code", "sailCode", "id",
             "departureDate", "startDate", "embarkDate", "sailDate",
-            "shipName", "ship", "vessel",
-            "duration", "nights", "durationNights",
-            "itineraryCode", "destinationName",
+            "voyageStartDate", "sailingDate",
+            "shipName", "ship", "vessel", "shipCode",
+            "duration", "nights", "durationNights", "voyageDuration",
+            "itineraryCode", "destinationName", "packageCode",
+            # NCLH-specific field names seen in their booking platform
+            "embarkPortName", "embarkationPortName",
+            "sailingNights", "tripDuration",
         }
         return bool(cruise_keys & set(obj.keys()))
 
@@ -366,9 +422,11 @@ class OceaniaCruisesScraper(BaseScraper):
                 items = body
             elif isinstance(body, dict):
                 for key in ("cruises", "voyages", "sailings", "results",
-                            "items", "data", "itineraries"):
+                            "items", "data", "itineraries", "packages",
+                            "sailingList", "cruiseList", "offers"):
                     inner = body.get(key)
                     if isinstance(inner, list):
+                        logger.info("Extracting %d items from key '%s'", len(inner), key)
                         items = inner
                         break
                 else:
@@ -376,17 +434,21 @@ class OceaniaCruisesScraper(BaseScraper):
                         items = [body]
 
             for item in items:
+                if not isinstance(item, dict):
+                    continue
                 # Deduplicate by any available ID field
                 item_id = (
                     item.get("cruiseCode") or item.get("voyageCode") or
+                    item.get("sailCode") or item.get("packageCode") or
                     item.get("code") or item.get("id")
                 )
-                if item_id and item_id in seen_ids:
+                if item_id and str(item_id) in seen_ids:
                     continue
                 if item_id:
                     seen_ids.add(str(item_id))
                 cruises.append(item)
 
+        logger.info("Extracted %d unique cruise records total", len(cruises))
         return cruises
 
     def _extract_cabin_categories(self, raw: dict) -> list[dict]:

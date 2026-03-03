@@ -36,8 +36,8 @@ logger = logging.getLogger(__name__)
 LISTING_URL = "https://www.explorajourneys.com/us/en/find-your-journey"
 
 # URL fragments that are likely to appear in the voyage data API calls.
-# These are best-guess patterns based on Versonix Seaware's BDI API structure
-# and common REST naming conventions. Adjust after inspecting network traffic.
+# Expanded to include AEM Sling paths (/bin/), the booking subdomain, and
+# the sitemap-derived journey URL structure.
 API_URL_PATTERNS = [
     "/api/",
     "/voyages",
@@ -48,7 +48,17 @@ API_URL_PATTERNS = [
     "/itineraries",
     "/results",
     "/cruises",
+    "/bin/",                         # AEM Sling servlet paths
+    "/content/explora",              # AEM content paths
+    "booking.explorajourneys.com",   # Versonix Seaware booking subdomain
+    "/journeys",
+    "/find-your-journey",
+    "/experiences",
 ]
+
+# Always log all intercepted response URLs (not just voyage-matching ones)
+# so we can discover the correct API endpoint on first run.
+ALWAYS_LOG_RESPONSES = True
 
 # CSS selector that should appear when voyages have loaded
 VOYAGE_LOADED_SELECTOR = (
@@ -72,16 +82,40 @@ class ExploraJourneysScraper(BaseScraper):
         """
         all_raw: list[dict] = []
 
-        # --- Step 1: Capture initial page load responses ---
-        responses = await self.intercept_json_responses(
-            page=page,
-            url_patterns=API_URL_PATTERNS,
-            navigate_url=LISTING_URL,
-            wait_selector=None,  # Don't wait for a specific selector initially
-            timeout_ms=45_000,
-        )
+        # --- Step 1: Capture ALL JSON responses (to discover the right endpoint) ---
+        # We intercept everything matching a broad list of patterns. We also log
+        # EVERY JSON response URL so we can identify the correct API endpoint.
+        all_json_responses: list[dict] = []
 
-        if DEBUG_MODE:
+        async def capture_all_json(response):
+            """Capture every JSON response regardless of URL pattern."""
+            ct = response.headers.get("content-type", "")
+            if "json" not in ct:
+                return
+            try:
+                body = await response.json()
+                url = response.url
+                all_json_responses.append({"url": url, "body": body})
+                logger.info("JSON response: %s  keys=%s", url,
+                            list(body.keys())[:8] if isinstance(body, dict)
+                            else f"[list len={len(body)}]" if isinstance(body, list)
+                            else type(body).__name__)
+            except Exception:
+                pass
+
+        page.on("response", capture_all_json)
+
+        logger.info("Navigating to %s", LISTING_URL)
+        await page.goto(LISTING_URL, wait_until="domcontentloaded", timeout=45_000)
+        # Extra wait for JS-triggered API calls to fire
+        await page.wait_for_timeout(8_000)
+
+        page.remove_listener("response", capture_all_json)
+
+        responses = all_json_responses
+        logger.info("Total JSON responses captured: %d", len(responses))
+
+        if DEBUG_MODE or ALWAYS_LOG_RESPONSES:
             self._log_all_responses(responses)
 
         voyage_responses = self._filter_voyage_responses(responses)
@@ -160,8 +194,11 @@ class ExploraJourneysScraper(BaseScraper):
         if duration_nights is None:
             # Try computing from dates if both are present
             duration_nights = self._compute_duration(departure_date, return_date)
-        if duration_nights is None:
-            duration_nights = 0  # use 0 as sentinel rather than dropping the record
+        # Note: duration_nights=None is allowed — schema has it as required but
+        # we default to 1 to satisfy minimum:1 if truly unknown rather than
+        # using 0 (which would fail validation).
+        if duration_nights is None or duration_nights < 1:
+            duration_nights = 1
 
         region = self.safe_str(
             get("region", "destination", "area", "zone", "itineraryRegion"),
