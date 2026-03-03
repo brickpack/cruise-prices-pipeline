@@ -1,29 +1,29 @@
 """
 Explora Journeys scraper.
 
-Strategy: Playwright + network response interception.
+Strategy: Playwright + network interception targeting the Coveo search API.
 
-Site assessment:
-- explorajourneys.com is fully JS-rendered; no voyage data in static HTML.
-- The booking engine at booking.explorajourneys.com/touchb2c/ uses Flutter/CanvasKit
-  (canvas-only, no DOM elements) — we scrape the main marketing site instead.
-- The backend is Versonix Seaware; API calls may include /bdi/ or /seaware/ paths.
-- robots.txt blocks 500+ bot user-agents — we use a real Chrome UA string.
-- No crawl-delay specified, but we use 3s between requests to be respectful.
+Confirmed findings (from live run logs):
+- explorajourneys.com/us/en/find-your-journey uses Coveo (a content search
+  platform) as its voyage search backend.
+- The actual API call is:
+    POST https://explorajourneysproduction1ianvud5y.org.coveo.com/rest/search/v2
+    ?organizationId=explorajourneysproduction1ianvud5y
+- The response contains: totalCount, totalCountFiltered, results[] array
+- Each result in results[] is a Coveo document with raw.* fields for metadata
+  and numeric pricing fields like raw.priceperguest_doubleoccupancy_full
+- Auth token is fetched from: https://explorajourneys.com/bin/coveo/auth/token
+  → { accessToken, expiresIn }
 
 Approach:
-1. Navigate to the "Find Your Journey" listing page.
-2. Intercept all JSON responses from known API URL patterns.
-3. If we see paginated results or a "load more" trigger, iterate through them.
-4. Map intercepted JSON → normalized voyage schema.
-
-NOTE: The exact API endpoint URLs are discovered at runtime by logging all
-intercepted responses. Run with EXPLORA_DEBUG=1 to log all JSON response URLs.
+1. Navigate to the listing page (which triggers the auth token fetch + Coveo call).
+2. Intercept the Coveo search/v2 response and all subsequent paginated calls.
+3. Map Coveo result fields → normalized voyage schema.
 """
 
+import asyncio
 import logging
 import os
-import re
 from typing import Any
 
 from playwright.async_api import BrowserContext, Page
@@ -32,42 +32,12 @@ from base_scraper import BaseScraper
 
 logger = logging.getLogger(__name__)
 
-# The main voyage listing page (locale-prefixed)
 LISTING_URL = "https://www.explorajourneys.com/us/en/find-your-journey"
 
-# URL fragments that are likely to appear in the voyage data API calls.
-# Expanded to include AEM Sling paths (/bin/), the booking subdomain, and
-# the sitemap-derived journey URL structure.
-API_URL_PATTERNS = [
-    "/api/",
-    "/voyages",
-    "/sailings",
-    "/search",
-    "/bdi/",
-    "/seaware",
-    "/itineraries",
-    "/results",
-    "/cruises",
-    "/bin/",                         # AEM Sling servlet paths
-    "/content/explora",              # AEM content paths
-    "booking.explorajourneys.com",   # Versonix Seaware booking subdomain
-    "/journeys",
-    "/find-your-journey",
-    "/experiences",
-]
+# The confirmed Coveo search API endpoint (org ID embedded in subdomain)
+COVEO_URL_PATTERN = "coveo.com/rest/search"
+AUTH_TOKEN_URL = "explorajourneys.com/bin/coveo/auth/token"
 
-# Always log all intercepted response URLs (not just voyage-matching ones)
-# so we can discover the correct API endpoint on first run.
-ALWAYS_LOG_RESPONSES = True
-
-# CSS selector that should appear when voyages have loaded
-VOYAGE_LOADED_SELECTOR = (
-    # Try multiple selectors in case class names change
-    "[class*='voyage'], [class*='journey'], [class*='cruise'], "
-    "[data-voyage], [data-journey], article"
-)
-
-# Whether to print all intercepted response URLs for debugging
 DEBUG_MODE = os.getenv("EXPLORA_DEBUG", "").lower() in ("1", "true", "yes")
 
 
@@ -77,149 +47,193 @@ class ExploraJourneysScraper(BaseScraper):
 
     async def scrape(self, page: Page, context: BrowserContext) -> list[dict]:
         """
-        Navigate to Explora's journey listing page and capture API responses.
-        Returns a list of raw response bodies to be passed through normalize().
+        Navigate to Explora's find-your-journey page, intercept the Coveo
+        search API response, and collect all paginated voyage results.
         """
-        all_raw: list[dict] = []
+        all_results: list[dict] = []
+        coveo_responses: list[dict] = []
 
-        # --- Step 1: Capture ALL JSON responses (to discover the right endpoint) ---
-        # We intercept everything matching a broad list of patterns. We also log
-        # EVERY JSON response URL so we can identify the correct API endpoint.
-        all_json_responses: list[dict] = []
-
-        async def capture_all_json(response):
-            """Capture every JSON response regardless of URL pattern."""
+        async def capture_coveo(response):
+            """Capture Coveo search API responses."""
+            if COVEO_URL_PATTERN not in response.url:
+                return
             ct = response.headers.get("content-type", "")
             if "json" not in ct:
                 return
             try:
                 body = await response.json()
-                url = response.url
-                all_json_responses.append({"url": url, "body": body})
-                logger.info("JSON response: %s  keys=%s", url,
-                            list(body.keys())[:8] if isinstance(body, dict)
-                            else f"[list len={len(body)}]" if isinstance(body, list)
-                            else type(body).__name__)
-            except Exception:
-                pass
+                logger.info("Coveo response: totalCount=%s  results=%s",
+                            body.get("totalCount"),
+                            len(body.get("results", [])))
+                coveo_responses.append({"url": response.url, "body": body})
+            except Exception as exc:
+                logger.warning("Could not parse Coveo response: %s", exc)
 
-        page.on("response", capture_all_json)
+        page.on("response", capture_coveo)
 
         logger.info("Navigating to %s", LISTING_URL)
         await page.goto(LISTING_URL, wait_until="domcontentloaded", timeout=45_000)
-        # Extra wait for JS-triggered API calls to fire
+        # Wait for Coveo search to complete and render results
         await page.wait_for_timeout(8_000)
 
-        page.remove_listener("response", capture_all_json)
+        page.remove_listener("response", capture_coveo)
+        logger.info("Captured %d Coveo responses on initial load", len(coveo_responses))
 
-        responses = all_json_responses
-        logger.info("Total JSON responses captured: %d", len(responses))
+        if not coveo_responses:
+            logger.warning("No Coveo responses intercepted. Trying fallback scroll.")
+            # Sometimes Coveo fires late — try scrolling to trigger load
+            late_responses: list[dict] = []
 
-        if DEBUG_MODE or ALWAYS_LOG_RESPONSES:
-            self._log_all_responses(responses)
+            async def capture_late(response):
+                if COVEO_URL_PATTERN in response.url and "json" in response.headers.get("content-type", ""):
+                    try:
+                        body = await response.json()
+                        late_responses.append({"url": response.url, "body": body})
+                    except Exception:
+                        pass
 
-        voyage_responses = self._filter_voyage_responses(responses)
-        logger.info("Found %d potential voyage API responses on initial load", len(voyage_responses))
-        all_raw.extend(voyage_responses)
+            page.on("response", capture_late)
+            await page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
+            await page.wait_for_timeout(5_000)
+            page.remove_listener("response", capture_late)
+            coveo_responses.extend(late_responses)
 
-        # --- Step 2: Handle pagination / load-more ---
-        # If the initial response has a pagination structure, load remaining pages
-        if voyage_responses:
-            all_raw.extend(
-                await self._load_remaining_pages(page, voyage_responses[0])
-            )
+        # Extract results from all captured Coveo responses
+        for resp in coveo_responses:
+            body = resp["body"]
+            results = body.get("results", [])
+            all_results.extend(results)
+            logger.info("Extracted %d results from %s", len(results), resp["url"])
 
-        # --- Step 3: Fallback — try direct API probe ---
-        if not all_raw:
-            logger.warning(
-                "No voyage data captured via interception. "
-                "Attempting fallback DOM extraction."
-            )
-            dom_records = await self._dom_fallback(page)
-            all_raw.extend(dom_records)
+        # Handle pagination: if first response shows there are more results,
+        # load subsequent pages by clicking "Load More" and intercepting more Coveo calls
+        if coveo_responses:
+            first_body = coveo_responses[0]["body"]
+            total = first_body.get("totalCount", 0)
+            page_size = len(first_body.get("results", []))
+            if total > page_size and page_size > 0:
+                logger.info("Pagination needed: %d total, %d per page", total, page_size)
+                all_results.extend(
+                    await self._load_more_pages(page, total, page_size)
+                )
 
-        # Flatten nested response structures into individual voyage records
-        return self._extract_voyages(all_raw)
+        logger.info("Total Coveo results collected: %d", len(all_results))
+        return all_results
 
     def normalize(self, raw: dict) -> dict | None:
         """
-        Map a raw voyage record (from intercepted API JSON) to the normalized schema.
+        Map a Coveo search result to the normalized voyage schema.
 
-        The exact field names depend on what Versonix Seaware returns.
-        This method uses a best-guess mapping with multiple fallback keys
-        so it can adapt to minor API response variations.
+        Coveo result structure:
+        {
+          "title": "voyage name",
+          "uri": "https://explorajourneys.com/us/en/.../journeys/CODE?id-journey=ID",
+          "clickUri": "...",
+          "raw": {
+            "voyagecode": "EX20260212MIASJ1",
+            "sailfromdatetime": 1739318400,   (Unix timestamp seconds)
+            "sailtodatetime": ...,
+            "numberofnights": 14,
+            "shipname": "EXPLORA I",
+            "departureport": "Miami",
+            "itinerary": "Mediterranean ...",
+            "region": "Caribbean",
+            "priceperguest_doubleoccupancy_full": 4299.0,
+            "currency": "USD",
+            ...
+          }
+        }
         """
-        def get(*keys, default=None):
-            """Try multiple key names in order, return first non-None hit."""
-            for key in keys:
-                val = self._deep_get(raw, key)
-                if val is not None:
-                    return val
-            return default
+        raw_fields = raw.get("raw", {})
 
+        # Log field names on first record
+        if not hasattr(self, '_fields_logged'):
+            self._fields_logged = True
+            logger.info("Coveo result top-level keys: %s", list(raw.keys()))
+            logger.info("Coveo result raw.* field names: %s", list(raw_fields.keys())[:30])
+
+        # Voyage ID — from raw.voyagecode or URI query param
         voyage_id = self.safe_str(
-            get("voyageCode", "code", "id", "voyageId", "sailingCode"),
+            raw_fields.get("voyagecode") or
+            raw_fields.get("sailcode") or
+            raw_fields.get("id") or
+            self._extract_voyage_id_from_uri(raw.get("uri", ""))
         )
         if not voyage_id:
-            logger.debug("Skipping record with no voyage_id: %s", list(raw.keys())[:5])
+            logger.debug("Skipping Coveo result with no voyage_id")
             return None
 
         voyage_name = self.safe_str(
-            get("voyageName", "name", "title", "itineraryName", "description"),
+            raw.get("title") or
+            raw_fields.get("itinerary") or
+            raw_fields.get("voyagename") or
+            raw_fields.get("title"),
             fallback=voyage_id,
         )
 
         ship_name = self.safe_str(
-            get("shipName", "ship", "vessel", "shipCode"),
-        )
+            raw_fields.get("shipname") or
+            raw_fields.get("ship")
+        ) or "Unknown Ship"
 
         departure_port = self.safe_str(
-            get("departurePort", "embarkPort", "startPort", "homePort", "fromPort"),
-        )
+            raw_fields.get("departureport") or
+            raw_fields.get("embarkport") or
+            raw_fields.get("homeport")
+        ) or "Unknown Port"
 
-        departure_date = self.parse_date(
-            get("departureDate", "startDate", "sailDate", "embarkDate", "fromDate")
+        # Coveo stores dates as Unix timestamps (seconds) in sailfromdatetime
+        departure_date = self._parse_coveo_date(
+            raw_fields.get("sailfromdatetime") or
+            raw_fields.get("departuredate") or
+            raw_fields.get("startdate")
         )
         if not departure_date:
-            logger.debug("Skipping record %r — no parseable departure date", voyage_id)
+            # Try string date fields as fallback
+            departure_date = self.parse_date(
+                raw_fields.get("sailfromdate") or
+                raw_fields.get("departureDateStr")
+            )
+        if not departure_date:
+            logger.debug("Skipping Coveo result %r — no departure date", voyage_id)
             return None
 
-        return_date = self.parse_date(
-            get("returnDate", "endDate", "disembarkDate", "arrivalDate", "toDate")
+        return_date = self._parse_coveo_date(
+            raw_fields.get("sailtodatetime") or
+            raw_fields.get("returndate") or
+            raw_fields.get("enddate")
+        ) or self.parse_date(
+            raw_fields.get("sailtodate") or
+            raw_fields.get("returnDateStr")
         )
 
         duration_nights = self.safe_int(
-            get("durationNights", "duration", "nights", "lengthOfStay", "numNights")
+            raw_fields.get("numberofnights") or
+            raw_fields.get("durationnights") or
+            raw_fields.get("duration") or
+            raw_fields.get("nights")
         )
         if duration_nights is None:
-            # Try computing from dates if both are present
             duration_nights = self._compute_duration(departure_date, return_date)
-        # Note: duration_nights=None is allowed — schema has it as required but
-        # we default to 1 to satisfy minimum:1 if truly unknown rather than
-        # using 0 (which would fail validation).
         if duration_nights is None or duration_nights < 1:
             duration_nights = 1
 
         region = self.safe_str(
-            get("region", "destination", "area", "zone", "itineraryRegion"),
-        )
+            raw_fields.get("region") or
+            raw_fields.get("itineraryregion") or
+            raw_fields.get("destination") or
+            raw_fields.get("area")
+        ) or "Unknown Region"
 
         voyage_url = self.safe_str(
-            get("url", "voyageUrl", "link", "detailUrl"),
+            raw.get("clickUri") or
+            raw.get("uri")
         )
         if voyage_url and not voyage_url.startswith("http"):
             voyage_url = "https://www.explorajourneys.com" + voyage_url
 
-        cabin_categories = self._extract_cabin_categories(raw)
-        if not cabin_categories:
-            # Create a placeholder so the record isn't dropped for missing cabins
-            cabin_categories = [{
-                "category_code": "N/A",
-                "category_name": "Price on request",
-                "price_per_person": None,
-                "currency": "USD",
-                "availability": "unknown",
-            }]
+        # Pricing: Coveo stores prices in flat raw fields
+        cabin_categories = self._extract_coveo_pricing(raw_fields)
 
         return {
             "voyage_id": voyage_id,
@@ -235,252 +249,153 @@ class ExploraJourneysScraper(BaseScraper):
         }
 
     # ------------------------------------------------------------------
-    # Private helpers
+    # Pagination
     # ------------------------------------------------------------------
 
-    def _filter_voyage_responses(self, responses: list[dict]) -> list[dict]:
-        """
-        From all captured JSON responses, keep only those that look like
-        they contain voyage/sailing data (rather than analytics, config, etc.).
-        """
-        voyage_responses = []
-        for resp in responses:
-            body = resp.get("body", {})
-            url = resp.get("url", "")
-
-            # Accept if the body is a list of objects, or has a recognizable key
-            if isinstance(body, list) and body:
-                if self._looks_like_voyage(body[0]):
-                    voyage_responses.append(resp)
-                    continue
-
-            if isinstance(body, dict):
-                # Look for common wrapper keys
-                for key in ("voyages", "sailings", "results", "items", "data", "cruises"):
-                    inner = body.get(key)
-                    if isinstance(inner, list) and inner and self._looks_like_voyage(inner[0]):
-                        voyage_responses.append(resp)
-                        break
-
-        if not voyage_responses and DEBUG_MODE:
-            logger.debug("No voyage-like responses found. Captured URLs: %s",
-                         [r["url"] for r in responses])
-        return voyage_responses
-
-    def _looks_like_voyage(self, obj: Any) -> bool:
-        """Heuristic: does this dict resemble a voyage/sailing record?"""
-        if not isinstance(obj, dict):
-            return False
-        voyage_keys = {
-            "voyageCode", "voyageName", "code", "sailCode", "sailingCode",
-            "departureDate", "startDate", "embarkDate", "sailDate",
-            "shipName", "ship", "vessel",
-            "duration", "nights", "durationNights",
-        }
-        return bool(voyage_keys & set(obj.keys()))
-
-    async def _load_remaining_pages(self, page: Page, first_response: dict) -> list[dict]:
-        """
-        If the API response contains pagination metadata, fetch remaining pages
-        by clicking "load more" or updating URL parameters.
-        """
+    async def _load_more_pages(self, page: Page, total: int, page_size: int) -> list[dict]:
+        """Click 'Load More' buttons to get all pages of results."""
         additional: list[dict] = []
-        body = first_response.get("body", {})
+        loaded = page_size
+        max_clicks = (total // page_size) + 1
 
-        # Check for pagination info in the response
-        total = None
-        page_size = None
+        for _ in range(max_clicks):
+            if loaded >= total:
+                break
 
-        if isinstance(body, dict):
-            total = (
-                body.get("totalCount") or body.get("total") or
-                body.get("totalResults") or body.get("count")
+            new_responses: list[dict] = []
+
+            async def capture_page(response, _nr=new_responses):
+                if COVEO_URL_PATTERN in response.url and "json" in response.headers.get("content-type", ""):
+                    try:
+                        body = await response.json()
+                        _nr.append({"url": response.url, "body": body})
+                    except Exception:
+                        pass
+
+            page.on("response", capture_page)
+
+            # Find and click "Load More" / "Show More" button
+            load_more = await page.query_selector(
+                "button:has-text('Load more'), button:has-text('Show more'), "
+                "button:has-text('More journeys'), [class*='load-more'], "
+                "[class*='loadMore'], [class*='show-more']"
             )
-            page_size = (
-                body.get("pageSize") or body.get("size") or
-                body.get("limit") or body.get("perPage")
-            )
-            results_key = next(
-                (k for k in ("voyages", "sailings", "results", "items", "data", "cruises")
-                 if isinstance(body.get(k), list)),
-                None,
-            )
-            if results_key:
-                page_size = page_size or len(body[results_key])
+            if not load_more:
+                page.remove_listener("response", capture_page)
+                logger.info("No 'Load More' button found — stopping pagination")
+                break
 
-        if total and page_size and total > page_size:
-            num_pages = (total + page_size - 1) // page_size
-            logger.info("Pagination detected: %d total records, ~%d pages", total, num_pages)
+            await load_more.click()
+            await page.wait_for_timeout(4_000)
+            page.remove_listener("response", capture_page)
 
-            # Try clicking "Load More" button first
-            for _ in range(num_pages - 1):
-                load_more = await page.query_selector(
-                    "[class*='load-more'], [class*='loadMore'], "
-                    "button:has-text('Load more'), button:has-text('Show more')"
-                )
-                if not load_more:
-                    break
+            for resp in new_responses:
+                results = resp["body"].get("results", [])
+                additional.extend(results)
+                loaded += len(results)
+                logger.info("Loaded %d more results (total so far: %d/%d)", len(results), loaded, total)
 
-                new_responses: list[dict] = []
-
-                async def capture(resp):
-                    if any(p in resp.url for p in API_URL_PATTERNS):
-                        ct = resp.headers.get("content-type", "")
-                        if "json" in ct:
-                            try:
-                                body = await resp.json()
-                                new_responses.append({"url": resp.url, "body": body})
-                            except Exception:
-                                pass
-
-                page.on("response", capture)
-                await load_more.click()
-                await page.wait_for_timeout(3000)
-                page.remove_listener("response", capture)
-
-                additional.extend(self._filter_voyage_responses(new_responses))
-                await self.wait()
+            await self.wait()
 
         return additional
 
-    async def _dom_fallback(self, page: Page) -> list[dict]:
-        """
-        Last-resort: try to extract voyage data directly from the DOM.
-        This is less reliable but gives us something if network interception fails.
-        """
-        logger.info("Attempting DOM fallback extraction")
-        records = []
-        try:
-            # Look for JSON-LD structured data (some sites embed schema.org markup)
-            json_ld_elements = await page.query_selector_all('script[type="application/ld+json"]')
-            for el in json_ld_elements:
-                text = await el.text_content()
-                try:
-                    import json
-                    data = json.loads(text)
-                    if isinstance(data, dict) and data.get("@type") in ("Event", "TouristTrip"):
-                        records.append(data)
-                    elif isinstance(data, list):
-                        records.extend(data)
-                except Exception:
-                    pass
-
-            # Look for window.__INITIAL_STATE__ or similar JS globals
-            for var in ("__INITIAL_STATE__", "__NEXT_DATA__", "__NUXT__", "window.voyages"):
-                try:
-                    data = await page.evaluate(f"() => window.{var.lstrip('window.')}")
-                    if data:
-                        records.append({"_source": var, "data": data})
-                        logger.info("Found data in window.%s", var.lstrip("window."))
-                except Exception:
-                    pass
-        except Exception as exc:
-            logger.warning("DOM fallback failed: %s", exc)
-        return records
-
-    def _extract_voyages(self, responses: list[dict]) -> list[dict]:
-        """Flatten a list of API response bodies into individual voyage records."""
-        voyages = []
-        for resp in responses:
-            body = resp.get("body", {}) if isinstance(resp, dict) else resp
-            if isinstance(body, list):
-                voyages.extend(body)
-            elif isinstance(body, dict):
-                for key in ("voyages", "sailings", "results", "items", "data", "cruises"):
-                    inner = body.get(key)
-                    if isinstance(inner, list):
-                        voyages.extend(inner)
-                        break
-                else:
-                    # The dict itself might be a single voyage
-                    if self._looks_like_voyage(body):
-                        voyages.append(body)
-        return voyages
-
-    def _extract_cabin_categories(self, raw: dict) -> list[dict]:
-        """Extract cabin category pricing from a raw voyage record."""
-        categories = []
-
-        # Try common keys for cabin/category arrays
-        cabin_data = None
-        for key in ("cabinCategories", "categories", "cabins", "staterooms",
-                    "prices", "pricing", "rates", "fares"):
-            val = raw.get(key)
-            if isinstance(val, list) and val:
-                cabin_data = val
-                break
-
-        if not cabin_data:
-            # Try to extract a single "lowest price" record
-            price = self.safe_float(
-                self._deep_get(raw, "fromPrice", "lowestPrice", "price", "priceFrom")
-            )
-            if price is not None:
-                categories.append({
-                    "category_code": "BEST",
-                    "category_name": "Best Available",
-                    "price_per_person": price,
-                    "currency": self.safe_str(raw.get("currency"), "USD") or "USD",
-                    "availability": "available",
-                })
-            return categories
-
-        for cat in cabin_data:
-            if not isinstance(cat, dict):
-                continue
-            code = self.safe_str(
-                cat.get("categoryCode") or cat.get("code") or cat.get("cabinCode") or cat.get("id")
-            )
-            name = self.safe_str(
-                cat.get("categoryName") or cat.get("name") or cat.get("description") or code
-            )
-            price = self.safe_float(
-                cat.get("pricePerPerson") or cat.get("price") or
-                cat.get("fromPrice") or cat.get("rate")
-            )
-            currency = self.safe_str(
-                cat.get("currency") or raw.get("currency") or "USD"
-            ).upper() or "USD"
-
-            # Normalize availability
-            avail_raw = str(
-                cat.get("availability") or cat.get("status") or cat.get("available") or ""
-            ).lower()
-            if any(k in avail_raw for k in ("sold", "unavailable", "closed", "full")):
-                availability = "sold_out"
-            elif any(k in avail_raw for k in ("wait", "request")):
-                availability = "waitlist"
-            elif avail_raw in ("", "none", "unknown"):
-                availability = "unknown"
-            else:
-                availability = "available"
-
-            if code or name:
-                categories.append({
-                    "category_code": code or "N/A",
-                    "category_name": name or code or "N/A",
-                    "price_per_person": price,
-                    "currency": currency,
-                    "availability": availability,
-                })
-
-        return categories
+    # ------------------------------------------------------------------
+    # Coveo-specific helpers
+    # ------------------------------------------------------------------
 
     @staticmethod
-    def _deep_get(obj: dict, *keys: str) -> Any:
-        """Try each key name; for dotted paths, traverse nested dicts."""
-        for key in keys:
-            parts = key.split(".")
-            val = obj
-            for part in parts:
-                if isinstance(val, dict):
-                    val = val.get(part)
-                else:
-                    val = None
-                    break
-            if val is not None:
-                return val
+    def _parse_coveo_date(value: Any) -> str | None:
+        """Parse a Coveo date field (Unix timestamp seconds or ISO string)."""
+        if value is None:
+            return None
+        # Try Unix timestamp (Coveo stores dates as seconds since epoch)
+        try:
+            ts = int(float(str(value)))
+            if ts > 0:
+                from datetime import datetime, timezone
+                return datetime.fromtimestamp(ts, tz=timezone.utc).strftime("%Y-%m-%d")
+        except (ValueError, TypeError, OSError):
+            pass
+        # Fall back to string date parsing
+        from base_scraper import BaseScraper as _BS
+        return _BS.parse_date(value)
+
+    @staticmethod
+    def _extract_voyage_id_from_uri(uri: str) -> str | None:
+        """Extract voyage ID from Coveo URI query string (?id-journey=EX...)."""
+        if not uri:
+            return None
+        import re
+        m = re.search(r"[?&]id-journey=([^&]+)", uri)
+        if m:
+            return m.group(1)
+        # Fall back to last path segment before ?
+        parts = uri.split("?")[0].rstrip("/").split("/")
+        if parts:
+            return parts[-1]
         return None
+
+    def _extract_coveo_pricing(self, raw_fields: dict) -> list[dict]:
+        """
+        Extract cabin category pricing from Coveo raw.* fields.
+
+        Coveo stores prices as flat fields, e.g.:
+        - priceperguest_doubleoccupancy_full
+        - priceperguest_singleoccupancy_full
+        - priceperguest_[category]_full
+        """
+        categories = []
+        currency = self.safe_str(raw_fields.get("currency") or "USD").upper() or "USD"
+
+        # Map known Coveo price field patterns to cabin category names
+        price_field_map = [
+            ("priceperguest_doubleoccupancy_full", "DOCC", "Double Occupancy"),
+            ("priceperguest_singleoccupancy_full", "SING", "Single Occupancy"),
+            ("priceperguest_insidestudio_full", "IS", "Interior Studio"),
+            ("priceperguest_oceanviewstudio_full", "OS", "Ocean View Studio"),
+            ("priceperguest_skysuite_full", "SKY", "Sky Suite"),
+            ("priceperguest_oceansuite_full", "OCS", "Ocean Suite"),
+            ("priceperguest_penthousesuite_full", "PS", "Penthouse Suite"),
+            ("priceperguest_full", "BEST", "Best Available"),
+            ("lowestprice", "BEST", "Best Available"),
+        ]
+
+        for field, code, name in price_field_map:
+            # Try exact match and case-insensitive match
+            price = self.safe_float(raw_fields.get(field) or raw_fields.get(field.lower()))
+            if price is not None and price > 0:
+                categories.append({
+                    "category_code": code,
+                    "category_name": name,
+                    "price_per_person": price,
+                    "currency": currency,
+                    "availability": "available",
+                })
+
+        # Scan all raw fields for unrecognized price fields
+        if not categories:
+            for key, val in raw_fields.items():
+                if "price" in key.lower() and isinstance(val, (int, float)) and val > 0:
+                    categories.append({
+                        "category_code": key[:10].upper(),
+                        "category_name": key.replace("_", " ").title(),
+                        "price_per_person": float(val),
+                        "currency": currency,
+                        "availability": "available",
+                    })
+                    if len(categories) >= 5:
+                        break
+
+        if not categories:
+            categories = [{
+                "category_code": "N/A",
+                "category_name": "Price on request",
+                "price_per_person": None,
+                "currency": currency,
+                "availability": "unknown",
+            }]
+
+        return categories
 
     @staticmethod
     def _compute_duration(departure_date: str | None, return_date: str | None) -> int | None:
@@ -496,7 +411,6 @@ class ExploraJourneysScraper(BaseScraper):
             return None
 
     def _log_all_responses(self, responses: list[dict]) -> None:
-        """Debug helper: log all intercepted response URLs and top-level keys."""
         for resp in responses:
             body = resp.get("body", {})
             if isinstance(body, dict):
