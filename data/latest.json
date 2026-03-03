@@ -1,0 +1,15 @@
+{
+  "generated_at": "2026-03-03T22:04:01.438826+00:00",
+  "scrape_date": "2026-03-03",
+  "cruise_lines": [
+    "explora_journeys",
+    "oceania_cruises"
+  ],
+  "record_counts": {
+    "explora_journeys": 0,
+    "oceania_cruises": 0
+  },
+  "total_records": 0,
+  "failures": [],
+  "voyages": []
+}
