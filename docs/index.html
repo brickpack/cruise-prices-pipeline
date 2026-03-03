@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cruise Price Tracker</title>
+  <meta name="description" content="Daily price tracking for Explora Journeys and Oceania Cruises voyages.">
+  <link rel="stylesheet" href="css/styles.css">
+  <!-- Chart.js from CDN — pinned to a stable version -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
+  <!-- App scripts — loaded as modules so they can import each other -->
+  <script type="module" src="js/app.js"></script>
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="site-logo">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M4 22 C4 22 8 16 16 16 C24 16 28 22 28 22" stroke="#c8a951" stroke-width="2" stroke-linecap="round"/>
+          <path d="M2 26 L30 26" stroke="#c8a951" stroke-width="2" stroke-linecap="round"/>
+          <path d="M16 16 L16 6" stroke="#c8a951" stroke-width="2" stroke-linecap="round"/>
+          <path d="M16 6 L22 12" stroke="#c8a951" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M16 6 L10 10" stroke="#c8a951" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        Cruise Price Tracker
+      </div>
+      <div class="header-meta">
+        Last updated: <strong id="last-updated">—</strong>
+        <span id="data-status" class="status-badge status-ok" style="margin-left:0.5rem">
+          <span class="status-dot"></span> Live
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== NAV TABS ===== -->
+  <nav class="nav-tabs container" role="tablist" aria-label="Main navigation">
+    <button class="nav-tab active" role="tab" aria-selected="true"  data-tab="dashboard"   aria-controls="panel-dashboard">Dashboard</button>
+    <button class="nav-tab"        role="tab" aria-selected="false" data-tab="prices"      aria-controls="panel-prices">Price Table</button>
+    <button class="nav-tab"        role="tab" aria-selected="false" data-tab="history"     aria-controls="panel-history">Price History</button>
+    <button class="nav-tab"        role="tab" aria-selected="false" data-tab="comparison"  aria-controls="panel-comparison">Compare</button>
+  </nav>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main class="container">
+
+    <!-- Loading state -->
+    <div id="loading" class="loading-spinner">
+      <div class="spinner"></div>
+      Loading cruise data…
+    </div>
+
+    <!-- Error banner (hidden until needed) -->
+    <div id="error-banner" class="error-banner" style="display:none" role="alert"></div>
+
+    <!-- ── DASHBOARD ── -->
+    <section id="panel-dashboard" class="tab-panel" role="tabpanel" aria-labelledby="tab-dashboard" style="display:none">
+
+      <div class="dashboard-grid" id="stats-grid">
+        <!-- Populated by app.js -->
+      </div>
+
+      <h2 class="section-title">Recent Price Changes</h2>
+      <div id="recent-changes" class="changes-grid">
+        <!-- Populated by app.js -->
+      </div>
+
+    </section>
+
+    <!-- ── PRICE TABLE ── -->
+    <section id="panel-prices" class="tab-panel" role="tabpanel" aria-labelledby="tab-prices" style="display:none">
+
+      <!-- Filters -->
+      <div class="filter-bar" id="filter-bar">
+        <div class="filter-group">
+          <label class="filter-label" for="filter-line">Cruise Line</label>
+          <select class="filter-control" id="filter-line">
+            <option value="">All Lines</option>
+            <option value="explora_journeys">Explora Journeys</option>
+            <option value="oceania_cruises">Oceania Cruises</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label class="filter-label" for="filter-region">Region</label>
+          <select class="filter-control" id="filter-region">
+            <option value="">All Regions</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label class="filter-label" for="filter-month">Departure Month</label>
+          <select class="filter-control" id="filter-month">
+            <option value="">Any Month</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label class="filter-label" for="filter-duration">Max Duration</label>
+          <select class="filter-control" id="filter-duration">
+            <option value="">Any Length</option>
+            <option value="7">Up to 7 nights</option>
+            <option value="14">Up to 14 nights</option>
+            <option value="21">Up to 21 nights</option>
+            <option value="30">Up to 30 nights</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label class="filter-label" for="filter-max-price">Max Price (pp)</label>
+          <input type="number" class="filter-control" id="filter-max-price" placeholder="e.g. 10000" min="0" step="500">
+        </div>
+        <button class="filter-reset-btn" id="filter-reset">Reset Filters</button>
+      </div>
+
+      <div class="result-count" id="result-count"></div>
+
+      <div class="table-wrapper">
+        <table class="price-table" id="price-table" aria-label="Cruise price listings">
+          <thead>
+            <tr>
+              <th data-sort="cruise_line">Line</th>
+              <th data-sort="voyage_name">Voyage</th>
+              <th data-sort="ship_name">Ship</th>
+              <th data-sort="region">Region</th>
+              <th data-sort="departure_date">Departure</th>
+              <th data-sort="duration_nights">Nights</th>
+              <th data-sort="price">From (pp)</th>
+              <th>Availability</th>
+            </tr>
+          </thead>
+          <tbody id="price-table-body">
+            <!-- Populated by filters.js -->
+          </tbody>
+        </table>
+        <div id="no-results" class="no-results" style="display:none">
+          No voyages match the current filters.
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ── PRICE HISTORY ── -->
+    <section id="panel-history" class="tab-panel" role="tabpanel" aria-labelledby="tab-history" style="display:none">
+
+      <p style="font-size:0.875rem; color:var(--text-muted); margin-bottom:1.5rem">
+        Click any row in the <button class="nav-tab" data-tab="prices" style="display:inline;padding:0;font-size:inherit;color:var(--gold);background:none;border:none;cursor:pointer">Price Table</button>
+        to view its price history here.
+      </p>
+
+      <div class="chart-panel" id="chart-panel">
+        <div class="chart-header">
+          <div>
+            <div class="chart-voyage-name" id="chart-voyage-name">No voyage selected</div>
+            <div class="chart-voyage-meta" id="chart-voyage-meta"></div>
+          </div>
+        </div>
+        <div id="chart-area">
+          <div class="chart-placeholder" id="chart-placeholder">
+            Select a voyage from the Price Table to view its price history
+          </div>
+          <div class="chart-canvas-wrap" id="chart-canvas-wrap" style="display:none">
+            <canvas id="price-chart" role="img" aria-label="Price history chart"></canvas>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ── COMPARISON ── -->
+    <section id="panel-comparison" class="tab-panel" role="tabpanel" aria-labelledby="tab-comparison" style="display:none">
+
+      <div class="filter-bar" style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); margin-bottom:1.5rem">
+        <div class="filter-group">
+          <label class="filter-label" for="comp-region">Region</label>
+          <select class="filter-control" id="comp-region">
+            <option value="">All Regions</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label class="filter-label" for="comp-month">Month</label>
+          <select class="filter-control" id="comp-month">
+            <option value="">Any Month</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label class="filter-label" for="comp-duration">Duration</label>
+          <select class="filter-control" id="comp-duration">
+            <option value="">Any Length</option>
+            <option value="7">Up to 7 nights</option>
+            <option value="14">Up to 14 nights</option>
+            <option value="21">Up to 21 nights</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="comparison-grid" id="comparison-grid">
+        <div class="comparison-column">
+          <div class="comparison-header explora">Explora Journeys</div>
+          <div id="comparison-explora">
+            <div class="no-results">Loading…</div>
+          </div>
+        </div>
+        <div class="comparison-column">
+          <div class="comparison-header oceania">Oceania Cruises</div>
+          <div id="comparison-oceania">
+            <div class="no-results">Loading…</div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer style="padding:2rem 0; margin-top:3rem; border-top:1px solid var(--border-subtle); text-align:center; font-size:0.78rem; color:var(--text-muted);">
+    <div class="container">
+      Data scraped daily from public cruise line websites &mdash;
+      not affiliated with any cruise line &mdash;
+      prices may not reflect current availability.
+      &nbsp;&middot;&nbsp;
+      <a href="https://github.com" target="_blank" rel="noopener">View source on GitHub</a>
+    </div>
+  </footer>
+
+</body>
+</html>
