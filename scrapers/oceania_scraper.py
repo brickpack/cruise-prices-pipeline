@@ -222,45 +222,80 @@ class OceaniaCruisesScraper(BaseScraper):
         self, page: Page, first_url: str | None, total_pages: int
     ) -> list[dict]:
         """
-        Load remaining pages of cruise results.
-        Strategy: click Next Page button and intercept the resulting API call.
+        Load remaining pages of cruise results via direct API fetch calls.
+
+        Strategy: use page.evaluate() to call the Oceania API directly from
+        within the browser context (shares cookies/session). This is more
+        reliable than trying to click pagination UI buttons.
+
+        The confirmed API endpoint accepts ?page=N&pageSize=10 parameters.
+        We cap at a reasonable limit to avoid excessively long runs.
         """
         additional: list[dict] = []
 
-        for page_num in range(2, total_pages + 1):
-            await self.wait(CRAWL_DELAY_SECONDS)  # honor crawl-delay
+        # Build the base URL from the confirmed API endpoint.
+        # Use the filters and sort from the first request if available.
+        if first_url:
+            import re
+            # Extract the filters/sort params from the first URL
+            filters_match = re.search(r"filters=[^&]+", first_url)
+            sort_match = re.search(r"sort=[^&]+", first_url)
+            filters_param = filters_match.group(0) if filters_match else \
+                "filters=duration%7Ctime_frame%7Cnot:port%7Cport%7Cship%7Cmarketing_region"
+            sort_param = sort_match.group(0) if sort_match else "sort=featured:desc"
+        else:
+            filters_param = "filters=duration%7Ctime_frame%7Cnot:port%7Cport%7Cship%7Cmarketing_region"
+            sort_param = "sort=featured:desc"
 
-            new_responses: list[dict] = []
+        # Cap total_pages to avoid excessively long scrapes
+        max_pages = min(total_pages, 100)
 
-            async def capture_page(response, _nr=new_responses):
-                if CRUISE_API_PATTERN in response.url and "json" in response.headers.get("content-type", ""):
-                    try:
-                        body = await response.json()
-                        _nr.append({"url": response.url, "body": body})
-                    except Exception:
-                        pass
+        for page_num in range(2, max_pages + 1):
+            await self.wait(CRAWL_DELAY_SECONDS)  # honor robots.txt crawl-delay
 
-            page.on("response", capture_page)
-
-            # Try to click a pagination button
-            next_btn = await page.query_selector(
-                "button[aria-label='Next page'], button[aria-label='Next'], "
-                "[class*='next-page']:not([disabled]), [class*='pagination-next']:not([disabled]), "
-                "button:has-text('Next')"
+            api_url = (
+                f"{CRUISE_API_BASE}"
+                f"?{filters_param}&{sort_param}&page={page_num}&pageSize=10"
             )
-            if not next_btn:
-                page.remove_listener("response", capture_page)
-                logger.info("No next-page button found at page %d — stopping", page_num)
-                break
+            logger.info("Fetching Oceania page %d/%d: %s", page_num, max_pages, api_url)
 
-            await next_btn.click()
-            await page.wait_for_timeout(5_000)
-            page.remove_listener("response", capture_page)
+            try:
+                # Use page.evaluate() to fetch from within the browser context
+                # (shares session cookies, avoids CORS issues)
+                result = await page.evaluate(
+                    """async (url) => {
+                        try {
+                            const resp = await fetch(url, {
+                                headers: {
+                                    'Accept': 'application/json',
+                                    'X-Requested-With': 'XMLHttpRequest'
+                                }
+                            });
+                            if (!resp.ok) return {error: resp.status};
+                            return await resp.json();
+                        } catch(e) {
+                            return {error: String(e)};
+                        }
+                    }""",
+                    api_url
+                )
 
-            for resp in new_responses:
-                results = resp["body"].get("results", [])
+                if not result or "error" in result:
+                    logger.warning("Oceania page %d fetch error: %s", page_num, result)
+                    break
+
+                results = result.get("results", [])
                 additional.extend(results)
-                logger.info("Page %d: %d results", page_num, len(results))
+                logger.info("Page %d: %d results (running total: %d)",
+                            page_num, len(results), len(additional))
+
+                if not results:
+                    logger.info("Empty results on page %d — stopping", page_num)
+                    break
+
+            except Exception as exc:
+                logger.warning("Failed to fetch Oceania page %d: %s", page_num, exc)
+                break
 
         return additional
 

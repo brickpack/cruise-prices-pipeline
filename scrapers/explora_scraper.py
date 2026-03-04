@@ -73,12 +73,29 @@ class ExploraJourneysScraper(BaseScraper):
         """
         all_results: list[dict] = []
         coveo_responses: list[dict] = []
+        coveo_auth_token: list[str] = []  # captured from auth token endpoint
+        coveo_request_body: list[dict] = []  # captured from Coveo POST body
 
         async def capture_coveo(response):
-            """Capture Coveo search API responses."""
-            if COVEO_URL_PATTERN not in response.url:
-                return
+            """Capture Coveo search API responses and auth tokens."""
+            url = response.url
             ct = response.headers.get("content-type", "")
+
+            # Capture auth token
+            if AUTH_TOKEN_URL in url and "json" in ct:
+                try:
+                    body = await response.json()
+                    token = body.get("accessToken") or body.get("token")
+                    if token:
+                        coveo_auth_token.append(token)
+                        logger.info("Captured Coveo auth token (length=%d)", len(token))
+                except Exception as exc:
+                    logger.warning("Could not parse auth token response: %s", exc)
+                return
+
+            # Capture Coveo search API responses
+            if COVEO_URL_PATTERN not in url:
+                return
             if "json" not in ct:
                 return
             try:
@@ -86,7 +103,7 @@ class ExploraJourneysScraper(BaseScraper):
                 logger.info("Coveo response: totalCount=%s  results=%s",
                             body.get("totalCount"),
                             len(body.get("results", [])))
-                coveo_responses.append({"url": response.url, "body": body})
+                coveo_responses.append({"url": url, "body": body})
             except Exception as exc:
                 logger.warning("Could not parse Coveo response: %s", exc)
 
@@ -127,15 +144,18 @@ class ExploraJourneysScraper(BaseScraper):
             logger.info("Extracted %d results from %s", len(results), resp["url"])
 
         # Handle pagination: if first response shows there are more results,
-        # load subsequent pages by clicking "Load More" and intercepting more Coveo calls
+        # load subsequent pages via direct Coveo API POST calls
         if coveo_responses:
             first_body = coveo_responses[0]["body"]
             total = first_body.get("totalCount", 0)
             page_size = len(first_body.get("results", []))
-            if total > page_size and page_size > 0:
+            auth_token = coveo_auth_token[0] if coveo_auth_token else None
+            if not auth_token:
+                logger.info("No Coveo auth token captured — pagination unavailable")
+            elif total > page_size and page_size > 0:
                 logger.info("Pagination needed: %d total, %d per page", total, page_size)
                 all_results.extend(
-                    await self._load_more_pages(page, total, page_size)
+                    await self._load_more_pages(page, total, page_size, auth_token)
                 )
 
         logger.info("Total Coveo results collected: %d", len(all_results))
@@ -325,50 +345,83 @@ class ExploraJourneysScraper(BaseScraper):
     # Pagination
     # ------------------------------------------------------------------
 
-    async def _load_more_pages(self, page: Page, total: int, page_size: int) -> list[dict]:
-        """Click 'Load More' buttons to get all pages of results."""
+    async def _load_more_pages(
+        self, page: Page, total: int, page_size: int, auth_token: str
+    ) -> list[dict]:
+        """
+        Load remaining pages of Coveo search results via direct API POST calls.
+
+        The Coveo search API (/rest/search/v2) is a POST endpoint that requires
+        an Authorization: Bearer <token> header. We captured this token during
+        the initial page load from /bin/coveo/auth/token.
+
+        Pagination is controlled by the 'firstResult' offset parameter.
+        """
         additional: list[dict] = []
-        loaded = page_size
-        max_clicks = (total // page_size) + 1
+        offset = page_size  # start after the first page already loaded
 
-        for _ in range(max_clicks):
-            if loaded >= total:
-                break
+        COVEO_SEARCH_URL = (
+            "https://explorajourneysproduction1ianvud5y.org.coveo.com"
+            "/rest/search/v2?organizationId=explorajourneysproduction1ianvud5y"
+        )
 
-            new_responses: list[dict] = []
+        # Cap total to avoid excessively long scrapes (max 300 voyages)
+        max_results = min(total, 300)
 
-            async def capture_page(response, _nr=new_responses):
-                if COVEO_URL_PATTERN in response.url and "json" in response.headers.get("content-type", ""):
-                    try:
-                        body = await response.json()
-                        _nr.append({"url": response.url, "body": body})
-                    except Exception:
-                        pass
+        while offset < max_results:
+            await self.wait()  # respect request_delay between calls
 
-            page.on("response", capture_page)
+            logger.info("Coveo: fetching offset %d–%d of %d",
+                        offset, min(offset + page_size, max_results), max_results)
 
-            # Find and click "Load More" / "Show More" button
-            load_more = await page.query_selector(
-                "button:has-text('Load more'), button:has-text('Show more'), "
-                "button:has-text('More journeys'), [class*='load-more'], "
-                "[class*='loadMore'], [class*='show-more']"
-            )
-            if not load_more:
-                page.remove_listener("response", capture_page)
-                logger.info("No 'Load More' button found — stopping pagination")
-                break
+            try:
+                result = await page.evaluate(
+                    """async (url, token, firstResult, numberOfResults) => {
+                        try {
+                            const resp = await fetch(url, {
+                                method: 'POST',
+                                headers: {
+                                    'Authorization': 'Bearer ' + token,
+                                    'Content-Type': 'application/json',
+                                    'Accept': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                    firstResult: firstResult,
+                                    numberOfResults: numberOfResults,
+                                })
+                            });
+                            if (!resp.ok) {
+                                const text = await resp.text();
+                                return {error: `HTTP ${resp.status}`, text: text.slice(0, 200)};
+                            }
+                            return await resp.json();
+                        } catch(e) {
+                            return {error: String(e)};
+                        }
+                    }""",
+                    COVEO_SEARCH_URL,
+                    auth_token,
+                    offset,
+                    page_size
+                )
 
-            await load_more.click()
-            await page.wait_for_timeout(4_000)
-            page.remove_listener("response", capture_page)
+                if not result or "error" in result:
+                    logger.warning("Coveo pagination fetch error at offset %d: %s", offset, result)
+                    break
 
-            for resp in new_responses:
-                results = resp["body"].get("results", [])
+                results = result.get("results", [])
+                if not results:
+                    logger.info("Empty results at offset %d — stopping pagination", offset)
+                    break
+
                 additional.extend(results)
-                loaded += len(results)
-                logger.info("Loaded %d more results (total so far: %d/%d)", len(results), loaded, total)
+                offset += len(results)
+                logger.info("Coveo: got %d results at offset %d (total collected: %d)",
+                            len(results), offset - len(results), len(additional))
 
-            await self.wait()
+            except Exception as exc:
+                logger.warning("Coveo pagination failed at offset %d: %s", offset, exc)
+                break
 
         return additional
 
