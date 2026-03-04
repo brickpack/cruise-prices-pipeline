@@ -30,7 +30,7 @@
       ],
       "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/tra/journeys/miaace-12-v2?id-journey=EX20260309MIAACE",
       "scrape_date": "2026-03-04",
-      "scrape_timestamp": "2026-03-04T00:10:19.178937+00:00",
+      "scrape_timestamp": "2026-03-04T00:17:45.172670+00:00",
       "cruise_line": "explora_journeys"
     },
     {
@@ -60,7 +60,7 @@
       ],
       "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/tra/journeys/miabcn-16-v6?id-journey=EX20260309MIABCN",
       "scrape_date": "2026-03-04",
-      "scrape_timestamp": "2026-03-04T00:10:19.178937+00:00",
+      "scrape_timestamp": "2026-03-04T00:17:45.172670+00:00",
       "cruise_line": "explora_journeys"
     },
     {
@@ -90,7 +90,7 @@
       ],
       "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/tra/journeys/miabcn-24-v2?id-journey=EX20260309MIABC1",
       "scrape_date": "2026-03-04",
-      "scrape_timestamp": "2026-03-04T00:10:19.178937+00:00",
+      "scrape_timestamp": "2026-03-04T00:17:45.172670+00:00",
       "cruise_line": "explora_journeys"
     },
     {
@@ -120,7 +120,7 @@
       ],
       "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/car/journeys/sjumia-07-v5?id-journey=EP20260311SJUMIA",
       "scrape_date": "2026-03-04",
-      "scrape_timestamp": "2026-03-04T00:10:19.178937+00:00",
+      "scrape_timestamp": "2026-03-04T00:17:45.172670+00:00",
       "cruise_line": "explora_journeys"
     },
     {
@@ -150,7 +150,7 @@
       ],
       "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/car/journeys/sjusju-15-v1?id-journey=EP20260311SJUSJU",
       "scrape_date": "2026-03-04",
-      "scrape_timestamp": "2026-03-04T00:10:19.178937+00:00",
+      "scrape_timestamp": "2026-03-04T00:17:45.172670+00:00",
       "cruise_line": "explora_journeys"
     },
     {
@@ -180,7 +180,7 @@
       ],
       "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/tra/journeys/sjuace-09-v1?id-journey=EX20260312SJUACE",
       "scrape_date": "2026-03-04",
-      "scrape_timestamp": "2026-03-04T00:10:19.178937+00:00",
+      "scrape_timestamp": "2026-03-04T00:17:45.172670+00:00",
       "cruise_line": "explora_journeys"
     },
     {
@@ -210,7 +210,7 @@
       ],
       "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/tra/journeys/sjubcn-13-v2?id-journey=EX20260312SJUBCN",
       "scrape_date": "2026-03-04",
-      "scrape_timestamp": "2026-03-04T00:10:19.178937+00:00",
+      "scrape_timestamp": "2026-03-04T00:17:45.172670+00:00",
       "cruise_line": "explora_journeys"
     },
     {
@@ -240,7 +240,7 @@
       ],
       "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/car/journeys/miasju-08-v1?id-journey=EP20260318MIASJU",
       "scrape_date": "2026-03-04",
-      "scrape_timestamp": "2026-03-04T00:10:19.178937+00:00",
+      "scrape_timestamp": "2026-03-04T00:17:45.172670+00:00",
       "cruise_line": "explora_journeys"
     },
     {
@@ -270,7 +270,7 @@
       ],
       "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/car/journeys/miasj1-15-v1?id-journey=EP20260318MIASJ1",
       "scrape_date": "2026-03-04",
-      "scrape_timestamp": "2026-03-04T00:10:19.178937+00:00",
+      "scrape_timestamp": "2026-03-04T00:17:45.172670+00:00",
       "cruise_line": "explora_journeys"
     },
     {
@@ -300,7 +300,7 @@
       ],
       "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/acebcn-04-v2?id-journey=EX20260321ACEBCN",
       "scrape_date": "2026-03-04",
-      "scrape_timestamp": "2026-03-04T00:10:19.178937+00:00",
+      "scrape_timestamp": "2026-03-04T00:17:45.172670+00:00",
       "cruise_line": "explora_journeys"
     },
     {
@@ -330,7 +330,7 @@
       ],
       "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/bcncvv-04-v2?id-journey=EX20260325BCNCVV",
       "scrape_date": "2026-03-04",
-      "scrape_timestamp": "2026-03-04T00:10:19.178937+00:00",
+      "scrape_timestamp": "2026-03-04T00:17:45.172670+00:00",
       "cruise_line": "explora_journeys"
     },
     {
@@ -360,7 +360,7 @@
       ],
       "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/bcnbcn-08-v2?id-journey=EX20260325BCNBCN",
       "scrape_date": "2026-03-04",
-      "scrape_timestamp": "2026-03-04T00:10:19.178937+00:00",
+      "scrape_timestamp": "2026-03-04T00:17:45.172670+00:00",
       "cruise_line": "explora_journeys"
     }
   ]
