@@ -16,7 +16,7 @@ import { initCharts } from './charts.js';
 // Data paths — relative to docs/ so they work on both GitHub Pages and locally
 // ---------------------------------------------------------------------------
 
-const DATA_BASE = '../data';
+const DATA_BASE = './data';
 const LATEST_URL = `${DATA_BASE}/latest.json`;
 const MANIFEST_URL = `${DATA_BASE}/manifest.json`;
 
