@@ -237,25 +237,21 @@ function initComparison() {
   const monthSel = document.getElementById('comp-month');
   const durationSel = document.getElementById('comp-duration');
 
-  // Populate dropdowns
-  const regions = [...new Set(state.voyages.map(v => v.region).filter(Boolean))].sort();
+  // Populate region dropdown from canonical regions (shared across both lines)
+  const regions = [...new Set(state.voyages.map(v => v.region_canonical).filter(Boolean))].sort();
   const months = [...new Set(state.voyages.map(v => v.departure_date?.slice(0, 7)).filter(Boolean))].sort();
 
   regions.forEach(r => {
-    [regionSel].forEach(el => {
-      const opt = document.createElement('option');
-      opt.value = r; opt.textContent = r;
-      el.appendChild(opt);
-    });
+    const opt = document.createElement('option');
+    opt.value = r; opt.textContent = r;
+    regionSel?.appendChild(opt);
   });
 
   months.forEach(m => {
     const label = formatMonthLabel(m);
-    [monthSel].forEach(el => {
-      const opt = document.createElement('option');
-      opt.value = m; opt.textContent = label;
-      el.appendChild(opt);
-    });
+    const opt = document.createElement('option');
+    opt.value = m; opt.textContent = label;
+    monthSel?.appendChild(opt);
   });
 
   const refresh = () => renderComparison();
@@ -270,7 +266,7 @@ function renderComparison() {
   const maxDuration = parseInt(document.getElementById('comp-duration')?.value ?? '') || Infinity;
 
   let voyages = state.voyages.filter(v => {
-    if (region && v.region !== region) return false;
+    if (region && v.region_canonical !== region) return false;
     if (month && !(v.departure_date?.startsWith(month))) return false;
     if (v.duration_nights > maxDuration) return false;
     return true;

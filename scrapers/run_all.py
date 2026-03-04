@@ -56,6 +56,63 @@ SCRAPERS = [
 
 
 # ---------------------------------------------------------------------------
+# Region normalisation
+#
+# Maps the raw region strings from each scraper to a shared canonical set
+# so the Compare view can meaningfully group voyages across cruise lines.
+# Explora uses multi-language marketing labels; Oceania uses slug strings.
+# ---------------------------------------------------------------------------
+
+_REGION_MAP: dict[str, str] = {
+    # Explora — English
+    "Caribbean & Central America":          "Caribbean",
+    "Mediterranean & Western Europe":       "Mediterranean",
+    "Grand Journey":                        "Grand Voyages",
+    "Grand Journeys":                       "Grand Voyages",
+    "Grand\u00a0Journeys":                  "Grand Voyages",  # non-breaking space variant
+    # Explora — French
+    "Caraïbes et Amérique centrale":        "Caribbean",
+    "Méditerranée et Europe de l'Ouest":    "Mediterranean",
+    "Méditerranée et Europe de l\u2019Ouest": "Mediterranean",  # curly apostrophe variant
+    "Grands Voyages":                       "Grand Voyages",
+    # Explora — Spanish
+    "Caribe y Centroamérica":               "Caribbean",
+    "Mediterráneo y Europa occidental":     "Mediterranean",
+    # Explora — Italian
+    "Caraibi e America centrale":           "Caribbean",
+    "Mediterraneo ed Europa occidentale":   "Mediterranean",
+    # Explora — German
+    "Karibik und Mittelamerika":            "Caribbean",
+    "Mittelmeer und Westeuropa":            "Mediterranean",
+    # Oceania — slugs
+    "caribbean":                            "Caribbean",
+    "mediterranean":                        "Mediterranean",
+    "greekisles":                           "Mediterranean",
+    "balticandscandinavia":                 "Northern Europe",
+    "britishisles":                         "Northern Europe",
+    "northernfjords":                       "Northern Europe",
+    "greenland":                            "Northern Europe",
+    "alaska":                               "Alaska",
+    "canadanewengland":                     "Canada & New England",
+    "asia":                                 "Asia",
+    "australia":                            "Australia & Pacific",
+    "southpacific":                         "Australia & Pacific",
+    "africa":                               "Africa",
+    "middleeast":                           "Middle East",
+    "southamerica":                         "South America",
+    "panamacanal":                          "Panama Canal",
+    "transoceanic":                         "Transatlantic / Transoceanic",
+    "grandvoyages":                         "Grand Voyages",
+    "180dayworld":                          "Grand Voyages",
+}
+
+
+def _canonical_region(raw: str) -> str:
+    """Return a shared canonical region label for a raw scraper region value."""
+    return _REGION_MAP.get(raw, raw)
+
+
+# ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
 
@@ -86,9 +143,11 @@ def main() -> int:
             failures.append(name)
             results[name] = []
 
-    # --- Update data/latest.json ---
+    # --- Normalize regions and add canonical region field ---
     all_records: list[dict] = []
     for name, records in results.items():
+        for rec in records:
+            rec["region_canonical"] = _canonical_region(rec.get("region", ""))
         all_records.extend(records)
 
     latest_payload = {
