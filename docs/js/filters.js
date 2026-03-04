@@ -68,26 +68,15 @@ export function applyFilterAndShow(opts = {}) {
 // ---------------------------------------------------------------------------
 
 function populateFilterDropdowns(voyages) {
-  const regions = [...new Set(voyages.map(v => v.region).filter(Boolean))].sort();
+  // Use canonical regions for the Price Table filter so they're consistent
+  const regions = [...new Set(voyages.map(v => v.region_canonical || v.region).filter(Boolean))].sort();
   const months  = [...new Set(voyages.map(v => v.departure_date?.slice(0, 7)).filter(Boolean))].sort();
 
   const regionSel = document.getElementById('filter-region');
   const monthSel  = document.getElementById('filter-month');
 
-  // Populate comparison panel dropdowns too (they share the same data sets)
-  const compRegionSel = document.getElementById('comp-region');
-  const compMonthSel  = document.getElementById('comp-month');
-
-  regions.forEach(r => {
-    appendOption(regionSel, r, r);
-    if (compRegionSel) appendOption(compRegionSel, r, r);
-  });
-
-  months.forEach(m => {
-    const label = formatMonthLabel(m);
-    appendOption(monthSel, m, label);
-    if (compMonthSel) appendOption(compMonthSel, m, label);
-  });
+  regions.forEach(r => appendOption(regionSel, r, r));
+  months.forEach(m => appendOption(monthSel, m, formatMonthLabel(m)));
 }
 
 function appendOption(selectEl, value, label) {
@@ -216,7 +205,7 @@ export function renderTable() {
 function applyFilters(voyages) {
   return voyages.filter(v => {
     if (_filters.line && v.cruise_line !== _filters.line) return false;
-    if (_filters.region && v.region !== _filters.region) return false;
+    if (_filters.region && (v.region_canonical || v.region) !== _filters.region) return false;
     if (_filters.month && !(v.departure_date?.startsWith(_filters.month))) return false;
     if (_filters.maxDuration != null && v.duration_nights > _filters.maxDuration) return false;
     if (_filters.maxPrice != null) {
