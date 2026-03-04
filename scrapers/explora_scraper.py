@@ -376,18 +376,18 @@ class ExploraJourneysScraper(BaseScraper):
 
             try:
                 result = await page.evaluate(
-                    """async (url, token, firstResult, numberOfResults) => {
+                    """async (args) => {
                         try {
-                            const resp = await fetch(url, {
+                            const resp = await fetch(args.url, {
                                 method: 'POST',
                                 headers: {
-                                    'Authorization': 'Bearer ' + token,
+                                    'Authorization': 'Bearer ' + args.token,
                                     'Content-Type': 'application/json',
                                     'Accept': 'application/json',
                                 },
                                 body: JSON.stringify({
-                                    firstResult: firstResult,
-                                    numberOfResults: numberOfResults,
+                                    firstResult: args.firstResult,
+                                    numberOfResults: args.numberOfResults,
                                 })
                             });
                             if (!resp.ok) {
@@ -399,10 +399,12 @@ class ExploraJourneysScraper(BaseScraper):
                             return {error: String(e)};
                         }
                     }""",
-                    COVEO_SEARCH_URL,
-                    auth_token,
-                    offset,
-                    page_size
+                    {
+                        "url": COVEO_SEARCH_URL,
+                        "token": auth_token,
+                        "firstResult": offset,
+                        "numberOfResults": page_size,
+                    }
                 )
 
                 if not result or "error" in result:

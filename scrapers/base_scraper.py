@@ -395,7 +395,17 @@ class BaseScraper(ABC):
         if not value:
             return None
         s = str(value).strip()
-        for fmt in ("%Y-%m-%d", "%m/%d/%Y", "%d/%m/%Y", "%Y%m%d", "%d-%b-%Y"):
+        for fmt in (
+            "%Y-%m-%d",           # 2025-06-15
+            "%m/%d/%Y",           # 06/15/2025
+            "%d/%m/%Y",           # 15/06/2025
+            "%Y%m%d",             # 20250615
+            "%d-%b-%Y",           # 15-Jun-2025
+            "%B %d, %Y",          # June 15, 2025  (Oceania API format)
+            "%b %d, %Y",          # Jun 15, 2025
+            "%B %d %Y",           # June 15 2025
+            "%d %B %Y",           # 15 June 2025
+        ):
             try:
                 return datetime.strptime(s, fmt).strftime("%Y-%m-%d")
             except ValueError:
