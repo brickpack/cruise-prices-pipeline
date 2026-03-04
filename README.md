@@ -8,8 +8,7 @@ No paid infrastructure — GitHub Actions (free tier) for scheduling, GitHub Pag
 
 ## Live Dashboard
 
-> Configure GitHub Pages to serve from `/docs` in your repo settings, then visit:
-> `https://YOUR-USERNAME.github.io/YOUR-REPO-NAME`
+**https://brickpack.github.io/cruise-prices-pipeline/**
 
 ---
 
@@ -20,13 +19,18 @@ No paid infrastructure — GitHub Actions (free tier) for scheduling, GitHub Pag
 ├── .github/workflows/scrape.yml   # Daily cron at 6 AM UTC
 ├── scrapers/
 │   ├── base_scraper.py            # Shared Playwright + schema validation logic
-│   ├── explora_scraper.py         # Explora Journeys scraper
-│   ├── oceania_scraper.py         # Oceania Cruises scraper
+│   ├── explora_scraper.py         # Explora Journeys scraper (Coveo API)
+│   ├── oceania_scraper.py         # Oceania Cruises scraper (NCLH API)
 │   ├── run_all.py                 # Orchestrator
+│   ├── send_alerts.py             # Email alert sender (Resend API)
 │   └── requirements.txt
+├── cloudflare-worker/
+│   ├── worker.js                  # Subscription endpoint (POST /subscribe, GET /unsubscribe)
+│   └── wrangler.toml              # Cloudflare Worker deployment config
 ├── data/
-│   ├── latest.json                # Most recent combined data
+│   ├── latest.json                # Most recent combined data (also copied to docs/data/)
 │   ├── manifest.json              # Index of available historical files
+│   ├── alerts.json                # Email alert subscriptions (managed by Worker)
 │   ├── schema.json                # JSON Schema for voyage records
 │   └── YYYY-MM-DD/
 │       ├── explora_journeys.json
@@ -34,10 +38,12 @@ No paid infrastructure — GitHub Actions (free tier) for scheduling, GitHub Pag
 └── docs/                          # GitHub Pages root
     ├── index.html
     ├── css/styles.css
+    ├── data/                      # Copy of latest.json + manifest.json (served by Pages)
     └── js/
         ├── app.js
         ├── filters.js
-        └── charts.js
+        ├── charts.js
+        └── alerts.js              # Alert signup form logic
 ```
 
 ---
@@ -73,9 +79,9 @@ python scrapers/run_all.py
 ls data/$(date +%Y-%m-%d)/
 cat data/latest.json | python -m json.tool | head -50
 
-# 5. Preview frontend (from repo root)
-python -m http.server 8000
-# Then open http://localhost:8000/docs/
+# 5. Preview frontend
+python -m http.server 8080 --directory docs
+# Then open http://localhost:8080/
 ```
 
 ### Debugging scrapers
@@ -116,6 +122,42 @@ The workflow (`.github/workflows/scrape.yml`) runs automatically at 6 AM UTC dai
 The workflow uses the built-in `GITHUB_TOKEN` — no personal access token needed.
 
 **Manual trigger:** Go to Actions → "Daily Cruise Price Scrape" → "Run workflow".
+
+---
+
+## Price Alert Setup (optional)
+
+Users can subscribe to email alerts via the **🔔 Alerts** tab on the dashboard. Alerts are sent daily after the scrape if matching voyages exist.
+
+### 1. Deploy the Cloudflare Worker
+
+The Worker receives form submissions and writes subscriptions to `data/alerts.json` via the GitHub API.
+
+```bash
+cd cloudflare-worker
+npx wrangler deploy
+
+# Set the required secrets:
+npx wrangler secret put GITHUB_TOKEN    # Fine-grained PAT: contents:write on this repo
+npx wrangler secret put GITHUB_REPO    # Value: brickpack/cruise-prices-pipeline
+npx wrangler secret put ALLOWED_ORIGIN # Value: https://brickpack.github.io
+```
+
+### 2. Update the Worker URL in the frontend
+
+Edit `docs/js/alerts.js` and replace `YOUR_SUBDOMAIN` in `ALERTS_ENDPOINT` with your actual Cloudflare Worker subdomain (shown after `wrangler deploy`).
+
+### 3. Add GitHub Actions secrets
+
+In **Settings → Secrets and variables → Actions**, add:
+
+| Secret | Value |
+|---|---|
+| `RESEND_API_KEY` | API key from [resend.com](https://resend.com) (free: 3,000 emails/month) |
+| `RESEND_FROM` | Sender address, e.g. `Cruise Alerts <alerts@yourdomain.com>` |
+| `WORKER_URL` | Your Cloudflare Worker base URL (for unsubscribe links in emails) |
+
+The `RESEND_API_KEY` secret is optional — if absent, the alert step is skipped silently and the rest of the scrape workflow runs normally.
 
 ---
 
