@@ -100,13 +100,29 @@ class OceaniaCruisesScraper(BaseScraper):
         all_results.extend(page1_results)
 
         # Check pagination
+        # Confirmed API structure: {"page": 1, "perPage": 10, "totalRecords": 610}
+        # (NOT totalPages/pageSize — those don't exist in the response)
         pagination = first_body.get("pagination", {})
-        total_pages = pagination.get("totalPages") or pagination.get("pages") or 1
-        total_count = pagination.get("totalCount") or pagination.get("total") or len(page1_results)
-        page_size = pagination.get("pageSize") or pagination.get("size") or len(page1_results)
+        logger.info("Oceania pagination object: %s", pagination)
 
-        logger.info("Oceania pagination: %d results, %d pages (pageSize=%d)",
-                    total_count, total_pages, page_size)
+        total_count = (
+            pagination.get("totalRecords") or
+            pagination.get("totalCount") or
+            pagination.get("total") or
+            len(page1_results)
+        )
+        page_size = (
+            pagination.get("perPage") or
+            pagination.get("pageSize") or
+            pagination.get("size") or
+            len(page1_results)
+        ) or 10
+
+        import math
+        total_pages = math.ceil(total_count / page_size) if page_size > 0 else 1
+
+        logger.info("Oceania pagination: %d total records, %d per page → %d pages",
+                    total_count, page_size, total_pages)
 
         # Fetch remaining pages by intercepting new API calls triggered by pagination clicks
         if total_pages > 1:
@@ -127,6 +143,16 @@ class OceaniaCruisesScraper(BaseScraper):
         embarkDate, debarkDate, primaryRegion,
         faresFrom, minBrochureFare, minPromotionalFare, minCruiseOnlyFare
         """
+        # Log ALL field names + key values on first record to aid debugging
+        if not hasattr(self, '_fields_logged'):
+            self._fields_logged = True
+            logger.info("Oceania result keys (ALL %d): %s", len(raw), list(raw.keys()))
+            for key in ("id", "voyageName", "shipName", "embarkPortName",
+                        "embarkDate", "debarkDate", "duration", "primaryRegion",
+                        "detailsURL", "faresFrom", "minCruiseOnlyFare"):
+                if key in raw:
+                    logger.info("  %s = %r", key, raw[key])
+
         voyage_id = self.safe_str(raw.get("id"))
         if not voyage_id:
             logger.debug("Skipping Oceania record with no id: keys=%s", list(raw.keys())[:5])
@@ -145,14 +171,15 @@ class OceaniaCruisesScraper(BaseScraper):
             raw.get("embarkPortName") or raw.get("departurePort") or raw.get("embarkPort")
         ) or "Unknown Port"
 
-        departure_date = self.parse_date(
+        departure_date = self._parse_oceania_date(
             raw.get("embarkDate") or raw.get("departureDate") or raw.get("startDate")
         )
         if not departure_date:
-            logger.debug("Skipping Oceania record %r — no departure date", voyage_id)
+            logger.debug("Skipping Oceania record %r — no departure date (raw embarkDate=%r)",
+                         voyage_id, raw.get("embarkDate"))
             return None
 
-        return_date = self.parse_date(
+        return_date = self._parse_oceania_date(
             raw.get("debarkDate") or raw.get("returnDate") or raw.get("endDate")
         )
 
@@ -316,6 +343,32 @@ class OceaniaCruisesScraper(BaseScraper):
     # ------------------------------------------------------------------
     # Utilities
     # ------------------------------------------------------------------
+
+    @staticmethod
+    def _parse_oceania_date(value: Any) -> str | None:
+        """
+        Parse an Oceania date field which may be:
+        - ISO string: "2025-06-15" or "2025-06-15T00:00:00"
+        - Unix timestamp in seconds: 1739318400
+        - Unix timestamp in milliseconds: 1739318400000
+        - Other string formats: "06/15/2025"
+        """
+        if value is None:
+            return None
+        # Try numeric timestamp
+        try:
+            ts = float(str(value))
+            if ts > 0:
+                # ms if > year 2100 in seconds
+                if ts > 4_102_444_800:
+                    ts = ts / 1000.0
+                from datetime import datetime, timezone
+                return datetime.fromtimestamp(ts, tz=timezone.utc).strftime("%Y-%m-%d")
+        except (ValueError, TypeError, OSError):
+            pass
+        # Fall back to string date parsing
+        from base_scraper import BaseScraper as _BS
+        return _BS.parse_date(value)
 
     @staticmethod
     def _compute_duration(departure_date: str | None, return_date: str | None) -> int | None:

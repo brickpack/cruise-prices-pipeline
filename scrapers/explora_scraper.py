@@ -12,13 +12,34 @@ Confirmed findings (from live run logs):
 - The response contains: totalCount, totalCountFiltered, results[] array
 - Each result in results[] is a Coveo document with raw.* fields for metadata
   and numeric pricing fields like raw.priceperguest_doubleoccupancy_full
-- Auth token is fetched from: https://explorajourneys.com/bin/coveo/auth/token
-  → { accessToken, expiresIn }
 
-Approach:
-1. Navigate to the listing page (which triggers the auth token fetch + Coveo call).
-2. Intercept the Coveo search/v2 response and all subsequent paginated calls.
-3. Map Coveo result fields → normalized voyage schema.
+Confirmed raw.* field names (from live API response logs):
+    systitle, sysurihash, urihash, staticoffertitle,
+    sailfromportcountry, priceperguest_doubleoccupancy_discount,
+    saildays,                           ← duration in days/nights
+    sailfromportcountry_ga,
+    priceperguest_doubleoccupancy_full,
+    dm_mapimage, permanentid, syslanguage,
+    ship,                               ← ship name
+    dm_primaryimage, title, destinationname,  ← region/destination
+    mapimage, currency,
+    priceperguest_singleoccupancy_discount, sailtoportcountry,
+    sailtoportcountry_ga, sailtoport, primaryimage,
+    shipcode,                           ← ship code (fallback ID source)
+    sailfromport_ga, destinationid,
+    sailtodateday,                      ← return date (day string)
+    priceperguest_singleoccupancy_full,
+    syssource,
+    sailfromport                        ← departure port
+
+Additional fields likely present (beyond the first 30 logged):
+    sailfromdatetime    ← departure date as Unix timestamp (ms or s)
+    sailtodatetime      ← return date as Unix timestamp
+    voyagecode          ← voyage ID (may be beyond first 30 fields)
+    permanentid         ← Coveo document ID (confirmed present)
+
+Auth token: fetched from https://explorajourneys.com/bin/coveo/auth/token
+→ { accessToken, expiresIn }
 """
 
 import asyncio
@@ -130,15 +151,17 @@ class ExploraJourneysScraper(BaseScraper):
           "uri": "https://explorajourneys.com/us/en/.../journeys/CODE?id-journey=ID",
           "clickUri": "...",
           "raw": {
-            "voyagecode": "EX20260212MIASJ1",
-            "sailfromdatetime": 1739318400,   (Unix timestamp seconds)
+            "permanentid": "...",        ← Coveo document ID
+            "ship": "EXPLORA I",         ← ship name (confirmed)
+            "shipcode": "EX1",           ← ship code
+            "sailfromport": "Miami",     ← departure port (confirmed)
+            "saildays": 14,              ← duration nights (confirmed)
+            "destinationname": "Caribbean", ← region (confirmed)
+            "sailfromdatetime": 1739318400,  ← Unix timestamp (s or ms)
             "sailtodatetime": ...,
-            "numberofnights": 14,
-            "shipname": "EXPLORA I",
-            "departureport": "Miami",
-            "itinerary": "Mediterranean ...",
-            "region": "Caribbean",
+            "sailtodateday": "20260226", ← return date as YYYYMMDD string
             "priceperguest_doubleoccupancy_full": 4299.0,
+            "priceperguest_singleoccupancy_full": 6500.0,
             "currency": "USD",
             ...
           }
@@ -146,68 +169,109 @@ class ExploraJourneysScraper(BaseScraper):
         """
         raw_fields = raw.get("raw", {})
 
-        # Log field names on first record
+        # Log ALL field names on first record (no truncation) to aid debugging
         if not hasattr(self, '_fields_logged'):
             self._fields_logged = True
             logger.info("Coveo result top-level keys: %s", list(raw.keys()))
-            logger.info("Coveo result raw.* field names: %s", list(raw_fields.keys())[:30])
+            logger.info("Coveo result raw.* field names (ALL %d fields): %s",
+                        len(raw_fields), list(raw_fields.keys()))
+            # Also log a sample of values for key fields
+            for key in ("permanentid", "ship", "shipcode", "sailfromport",
+                        "saildays", "destinationname", "sailfromdatetime",
+                        "sailtodatetime", "sailtodateday", "voyagecode",
+                        "title", "currency"):
+                if key in raw_fields:
+                    logger.info("  raw.%s = %r", key, raw_fields[key])
 
-        # Voyage ID — from raw.voyagecode or URI query param
+        # ------------------------------------------------------------------
+        # Voyage ID — try multiple field name patterns
+        # ------------------------------------------------------------------
         voyage_id = self.safe_str(
             raw_fields.get("voyagecode") or
+            raw_fields.get("voyage_code") or
+            raw_fields.get("voyageid") or
             raw_fields.get("sailcode") or
-            raw_fields.get("id") or
+            raw_fields.get("permanentid") or
             self._extract_voyage_id_from_uri(raw.get("uri", ""))
         )
         if not voyage_id:
-            logger.debug("Skipping Coveo result with no voyage_id")
+            logger.debug("Skipping Coveo result with no voyage_id; uri=%s", raw.get("uri", ""))
             return None
 
+        # ------------------------------------------------------------------
+        # Voyage name
+        # ------------------------------------------------------------------
         voyage_name = self.safe_str(
             raw.get("title") or
+            raw_fields.get("title") or
+            raw_fields.get("systitle") or
+            raw_fields.get("staticoffertitle") or
             raw_fields.get("itinerary") or
-            raw_fields.get("voyagename") or
-            raw_fields.get("title"),
+            raw_fields.get("voyagename"),
             fallback=voyage_id,
         )
 
+        # ------------------------------------------------------------------
+        # Ship name — confirmed field: "ship"
+        # ------------------------------------------------------------------
         ship_name = self.safe_str(
+            raw_fields.get("ship") or
             raw_fields.get("shipname") or
-            raw_fields.get("ship")
+            raw_fields.get("shipcode")
         ) or "Unknown Ship"
 
+        # ------------------------------------------------------------------
+        # Departure port — confirmed field: "sailfromport"
+        # ------------------------------------------------------------------
         departure_port = self.safe_str(
+            raw_fields.get("sailfromport") or
             raw_fields.get("departureport") or
             raw_fields.get("embarkport") or
             raw_fields.get("homeport")
         ) or "Unknown Port"
 
-        # Coveo stores dates as Unix timestamps (seconds) in sailfromdatetime
+        # ------------------------------------------------------------------
+        # Departure date — sailfromdatetime (Unix ts) or string fallbacks
+        # ------------------------------------------------------------------
         departure_date = self._parse_coveo_date(
             raw_fields.get("sailfromdatetime") or
+            raw_fields.get("sailfromdatetimems") or
             raw_fields.get("departuredate") or
             raw_fields.get("startdate")
         )
         if not departure_date:
-            # Try string date fields as fallback
+            # Try string date fields
             departure_date = self.parse_date(
+                raw_fields.get("sailfromdateday") or
                 raw_fields.get("sailfromdate") or
                 raw_fields.get("departureDateStr")
             )
         if not departure_date:
-            logger.debug("Skipping Coveo result %r — no departure date", voyage_id)
+            logger.debug("Skipping Coveo result %r — no departure date; raw keys=%s",
+                         voyage_id, list(raw_fields.keys()))
             return None
 
+        # ------------------------------------------------------------------
+        # Return date — sailtodatetime (Unix ts) or sailtodateday string
+        # ------------------------------------------------------------------
         return_date = self._parse_coveo_date(
             raw_fields.get("sailtodatetime") or
+            raw_fields.get("sailtodatetimems") or
             raw_fields.get("returndate") or
             raw_fields.get("enddate")
-        ) or self.parse_date(
-            raw_fields.get("sailtodate") or
-            raw_fields.get("returnDateStr")
         )
+        if not return_date:
+            return_date = self.parse_date(
+                raw_fields.get("sailtodateday") or
+                raw_fields.get("sailtodate") or
+                raw_fields.get("returnDateStr")
+            )
 
+        # ------------------------------------------------------------------
+        # Duration — confirmed field: "saildays"
+        # ------------------------------------------------------------------
         duration_nights = self.safe_int(
+            raw_fields.get("saildays") or
             raw_fields.get("numberofnights") or
             raw_fields.get("durationnights") or
             raw_fields.get("duration") or
@@ -218,13 +282,20 @@ class ExploraJourneysScraper(BaseScraper):
         if duration_nights is None or duration_nights < 1:
             duration_nights = 1
 
+        # ------------------------------------------------------------------
+        # Region — confirmed field: "destinationname"
+        # ------------------------------------------------------------------
         region = self.safe_str(
+            raw_fields.get("destinationname") or
             raw_fields.get("region") or
             raw_fields.get("itineraryregion") or
             raw_fields.get("destination") or
             raw_fields.get("area")
         ) or "Unknown Region"
 
+        # ------------------------------------------------------------------
+        # Voyage URL
+        # ------------------------------------------------------------------
         voyage_url = self.safe_str(
             raw.get("clickUri") or
             raw.get("uri")
@@ -232,7 +303,9 @@ class ExploraJourneysScraper(BaseScraper):
         if voyage_url and not voyage_url.startswith("http"):
             voyage_url = "https://www.explorajourneys.com" + voyage_url
 
+        # ------------------------------------------------------------------
         # Pricing: Coveo stores prices in flat raw fields
+        # ------------------------------------------------------------------
         cabin_categories = self._extract_coveo_pricing(raw_fields)
 
         return {
@@ -305,18 +378,38 @@ class ExploraJourneysScraper(BaseScraper):
 
     @staticmethod
     def _parse_coveo_date(value: Any) -> str | None:
-        """Parse a Coveo date field (Unix timestamp seconds or ISO string)."""
+        """
+        Parse a Coveo date field.
+
+        Coveo can store dates as:
+        - Unix timestamp in seconds (e.g. 1739318400)
+        - Unix timestamp in milliseconds (e.g. 1739318400000)
+        - ISO date string (e.g. "2026-02-12")
+        - YYYYMMDD string (e.g. "20260212")
+        """
         if value is None:
             return None
-        # Try Unix timestamp (Coveo stores dates as seconds since epoch)
+        # Try numeric timestamp
         try:
-            ts = int(float(str(value)))
+            ts = float(str(value))
             if ts > 0:
+                # Coveo uses milliseconds if value > year 2100 in seconds
+                # (year 2100 = 4102444800 seconds; ms values are ~1000x larger)
+                if ts > 4_102_444_800:
+                    ts = ts / 1000.0  # convert ms to seconds
                 from datetime import datetime, timezone
                 return datetime.fromtimestamp(ts, tz=timezone.utc).strftime("%Y-%m-%d")
         except (ValueError, TypeError, OSError):
             pass
-        # Fall back to string date parsing
+        # Try YYYYMMDD string (e.g. sailtodateday)
+        s = str(value).strip()
+        if len(s) == 8 and s.isdigit():
+            try:
+                from datetime import datetime
+                return datetime.strptime(s, "%Y%m%d").strftime("%Y-%m-%d")
+            except ValueError:
+                pass
+        # Fall back to standard date parsing
         from base_scraper import BaseScraper as _BS
         return _BS.parse_date(value)
 
@@ -339,7 +432,7 @@ class ExploraJourneysScraper(BaseScraper):
         """
         Extract cabin category pricing from Coveo raw.* fields.
 
-        Coveo stores prices as flat fields, e.g.:
+        Confirmed Coveo price field patterns:
         - priceperguest_doubleoccupancy_full
         - priceperguest_singleoccupancy_full
         - priceperguest_[category]_full
@@ -372,10 +465,10 @@ class ExploraJourneysScraper(BaseScraper):
                     "availability": "available",
                 })
 
-        # Scan all raw fields for unrecognized price fields
+        # Scan all raw fields for unrecognized price fields (fallback)
         if not categories:
             for key, val in raw_fields.items():
-                if "price" in key.lower() and isinstance(val, (int, float)) and val > 0:
+                if "price" in key.lower() and "discount" not in key.lower() and isinstance(val, (int, float)) and val > 0:
                     categories.append({
                         "category_code": key[:10].upper(),
                         "category_name": key.replace("_", " ").title(),
