@@ -189,6 +189,11 @@ class ExploraJourneysScraper(BaseScraper):
         """
         raw_fields = raw.get("raw", {})
 
+        # Skip non-English records (syslanguage field; default to English if absent)
+        lang = self.safe_str(raw_fields.get("syslanguage") or raw_fields.get("language") or "en").lower()
+        if lang and lang not in ("en", "english", "en-us", "en-gb"):
+            return None
+
         # Log ALL field names on first record (no truncation) to aid debugging
         if not hasattr(self, '_fields_logged'):
             self._fields_logged = True
@@ -365,14 +370,11 @@ class ExploraJourneysScraper(BaseScraper):
             "/rest/search/v2?organizationId=explorajourneysproduction1ianvud5y"
         )
 
-        # Cap total to avoid excessively long scrapes (max 300 voyages)
-        max_results = min(total, 300)
-
-        while offset < max_results:
+        while offset < total:
             await self.wait()  # respect request_delay between calls
 
             logger.info("Coveo: fetching offset %d–%d of %d",
-                        offset, min(offset + page_size, max_results), max_results)
+                        offset, min(offset + page_size, total), total)
 
             try:
                 result = await page.evaluate(
@@ -388,6 +390,8 @@ class ExploraJourneysScraper(BaseScraper):
                                 body: JSON.stringify({
                                     firstResult: args.firstResult,
                                     numberOfResults: args.numberOfResults,
+                                    sortCriteria: '@sailfromdatetime ascending',
+                                    aq: '@syslanguage==en',
                                 })
                             });
                             if (!resp.ok) {
