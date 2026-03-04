@@ -143,12 +143,22 @@ def main() -> int:
             failures.append(name)
             results[name] = []
 
-    # --- Normalize regions and add canonical region field ---
+    # --- Normalize regions, add canonical region field, and deduplicate ---
     all_records: list[dict] = []
+    seen_ids: set[str] = set()
+    dupes = 0
     for name, records in results.items():
         for rec in records:
             rec["region_canonical"] = _canonical_region(rec.get("region", ""))
-        all_records.extend(records)
+            vid = rec.get("voyage_id")
+            if vid and vid in seen_ids:
+                dupes += 1
+                continue
+            if vid:
+                seen_ids.add(vid)
+            all_records.append(rec)
+    if dupes:
+        logger.info("Removed %d duplicate voyage_id records", dupes)
 
     latest_payload = {
         "generated_at": run_start.isoformat(),

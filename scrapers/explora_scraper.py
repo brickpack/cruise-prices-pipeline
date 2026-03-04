@@ -324,6 +324,17 @@ class ExploraJourneysScraper(BaseScraper):
             voyage_url = "https://www.explorajourneys.com" + voyage_url
 
         # ------------------------------------------------------------------
+        # Language filter — Coveo returns every voyage in 5 languages
+        # (en, fr, es, it, de). Keep only English records by checking the
+        # locale segment in the URL path: explorajourneys.com/{market}/en/...
+        # ------------------------------------------------------------------
+        if voyage_url:
+            import re as _re
+            lang_match = _re.search(r'explorajourneys\.com/\w+/(\w+)/', voyage_url)
+            if lang_match and lang_match.group(1) != "en":
+                return None
+
+        # ------------------------------------------------------------------
         # Pricing: Coveo stores prices in flat raw fields
         # ------------------------------------------------------------------
         cabin_categories = self._extract_coveo_pricing(raw_fields)
