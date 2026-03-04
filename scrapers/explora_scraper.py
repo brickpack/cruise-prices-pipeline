@@ -189,11 +189,6 @@ class ExploraJourneysScraper(BaseScraper):
         """
         raw_fields = raw.get("raw", {})
 
-        # Skip non-English records (syslanguage field; default to English if absent)
-        lang = self.safe_str(raw_fields.get("syslanguage") or raw_fields.get("language") or "en").lower()
-        if lang and lang not in ("en", "english", "en-us", "en-gb"):
-            return None
-
         # Log ALL field names on first record (no truncation) to aid debugging
         if not hasattr(self, '_fields_logged'):
             self._fields_logged = True
@@ -391,7 +386,6 @@ class ExploraJourneysScraper(BaseScraper):
                                     firstResult: args.firstResult,
                                     numberOfResults: args.numberOfResults,
                                     sortCriteria: '@sailfromdatetime ascending',
-                                    aq: '@syslanguage==en',
                                 })
                             });
                             if (!resp.ok) {
