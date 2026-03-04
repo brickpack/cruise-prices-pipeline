@@ -486,34 +486,42 @@ class ExploraJourneysScraper(BaseScraper):
         Extract cabin category pricing from Coveo raw.* fields.
 
         Confirmed Coveo price field patterns:
-        - priceperguest_doubleoccupancy_full
+        - priceperguest_doubleoccupancy_full       (original/brochure price)
+        - priceperguest_doubleoccupancy_discount   (discounted/sale price)
         - priceperguest_singleoccupancy_full
-        - priceperguest_[category]_full
+        - priceperguest_singleoccupancy_discount
+        - priceperguest_[category]_full / _discount
         """
         categories = []
         currency = self.safe_str(raw_fields.get("currency") or "USD").upper() or "USD"
 
-        # Map known Coveo price field patterns to cabin category names
+        # Each tuple: (base_field_prefix, category_code, category_name)
+        # We look for both _full (original) and _discount (sale) variants
         price_field_map = [
-            ("priceperguest_doubleoccupancy_full", "DOCC", "Double Occupancy"),
-            ("priceperguest_singleoccupancy_full", "SING", "Single Occupancy"),
-            ("priceperguest_insidestudio_full", "IS", "Interior Studio"),
-            ("priceperguest_oceanviewstudio_full", "OS", "Ocean View Studio"),
-            ("priceperguest_skysuite_full", "SKY", "Sky Suite"),
-            ("priceperguest_oceansuite_full", "OCS", "Ocean Suite"),
-            ("priceperguest_penthousesuite_full", "PS", "Penthouse Suite"),
-            ("priceperguest_full", "BEST", "Best Available"),
-            ("lowestprice", "BEST", "Best Available"),
+            ("priceperguest_doubleoccupancy", "DOCC", "Double Occupancy"),
+            ("priceperguest_singleoccupancy", "SING", "Single Occupancy"),
+            ("priceperguest_insidestudio",    "IS",   "Interior Studio"),
+            ("priceperguest_oceanviewstudio", "OS",   "Ocean View Studio"),
+            ("priceperguest_skysuite",        "SKY",  "Sky Suite"),
+            ("priceperguest_oceansuite",      "OCS",  "Ocean Suite"),
+            ("priceperguest_penthousesuite",  "PS",   "Penthouse Suite"),
+            ("priceperguest",                 "BEST", "Best Available"),
         ]
 
-        for field, code, name in price_field_map:
-            # Try exact match and case-insensitive match
-            price = self.safe_float(raw_fields.get(field) or raw_fields.get(field.lower()))
-            if price is not None and price > 0:
+        for prefix, code, name in price_field_map:
+            full_price     = self.safe_float(raw_fields.get(f"{prefix}_full"))
+            discount_price = self.safe_float(raw_fields.get(f"{prefix}_discount"))
+
+            # Use discount price as the current price if available, else full price
+            current_price  = discount_price if (discount_price and discount_price > 0) else full_price
+            original_price = full_price if (discount_price and discount_price > 0 and full_price and full_price > discount_price) else None
+
+            if current_price and current_price > 0:
                 categories.append({
                     "category_code": code,
                     "category_name": name,
-                    "price_per_person": price,
+                    "price_per_person": current_price,
+                    "original_price": original_price,
                     "currency": currency,
                     "availability": "available",
                 })
@@ -526,6 +534,7 @@ class ExploraJourneysScraper(BaseScraper):
                         "category_code": key[:10].upper(),
                         "category_name": key.replace("_", " ").title(),
                         "price_per_person": float(val),
+                        "original_price": None,
                         "currency": currency,
                         "availability": "available",
                     })
@@ -537,6 +546,7 @@ class ExploraJourneysScraper(BaseScraper):
                 "category_code": "N/A",
                 "category_name": "Price on request",
                 "price_per_person": None,
+                "original_price": None,
                 "currency": currency,
                 "availability": "unknown",
             }]

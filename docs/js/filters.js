@@ -232,24 +232,35 @@ function buildRow(voyage) {
     ? '<span class="badge-line badge-explora">Explora</span>'
     : '<span class="badge-line badge-oceania">Oceania</span>';
 
-  const price = lowestPrice(voyage);
+  const price     = lowestPrice(voyage);
+  const origPrice = lowestOriginalPrice(voyage);
   const prevPrice = voyage._prev_price ?? null;
 
   let priceHtml = '<span class="price-cell" style="color:var(--text-muted)">—</span>';
   if (price != null) {
-    let priceClass = 'price-cell';
+    // Discount badge — show when we have a higher original price
+    let discountHtml = '';
+    if (origPrice != null && origPrice > price) {
+      const pct = Math.round((1 - price / origPrice) * 100);
+      discountHtml = `
+        <span class="orig-price">$${origPrice.toLocaleString()}</span>
+        <span class="discount-badge">−${pct}%</span>`;
+    }
+
+    // Day-over-day price change delta
     let deltaHtml = '';
     if (prevPrice != null && prevPrice !== price) {
       const delta = price - prevPrice;
       if (delta < 0) {
-        priceClass += ' price-down';
         deltaHtml = `<span class="price-delta delta-down">▼ $${Math.abs(delta).toLocaleString()}</span>`;
       } else {
-        priceClass += ' price-up';
         deltaHtml = `<span class="price-delta delta-up">▲ $${delta.toLocaleString()}</span>`;
       }
     }
-    priceHtml = `<span class="${priceClass}">$${price.toLocaleString()}</span>${deltaHtml}`;
+
+    priceHtml = `
+      <span class="price-cell">$${price.toLocaleString()}</span>
+      ${discountHtml}${deltaHtml}`;
   }
 
   // Best availability across cabin categories
@@ -268,10 +279,18 @@ function buildRow(voyage) {
       <td>${escapeHtml(voyage.region || '—')}</td>
       <td>${voyage.departure_date || '—'}</td>
       <td>${voyage.duration_nights ?? '—'}</td>
-      <td>${priceHtml}</td>
+      <td class="price-col">${priceHtml}</td>
       <td>${availHtml}</td>
     </tr>
   `;
+}
+
+/** Return the lowest original (pre-discount) price across all cabin categories, or null. */
+function lowestOriginalPrice(voyage) {
+  const prices = (voyage.cabin_categories ?? [])
+    .map(c => c.original_price)
+    .filter(p => p != null && p > 0);
+  return prices.length ? Math.min(...prices) : null;
 }
 
 // ---------------------------------------------------------------------------

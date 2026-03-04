@@ -90,7 +90,12 @@
           "price_per_person": {
             "type": ["number", "null"],
             "minimum": 0,
-            "description": "Price per person in the given currency; null if price unavailable"
+            "description": "Current/discounted price per person in the given currency; null if price unavailable"
+          },
+          "original_price": {
+            "type": ["number", "null"],
+            "minimum": 0,
+            "description": "Original/full brochure price per person before any discount; null if no discount or unavailable"
           },
           "currency": {
             "type": "string",

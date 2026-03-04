@@ -308,33 +308,40 @@ class OceaniaCruisesScraper(BaseScraper):
         Extract pricing from Oceania API record.
 
         Confirmed price fields:
-        - faresFrom: lowest fare (any category)
-        - minBrochureFare: brochure price
-        - minPromotionalFare: promotional price
-        - minCruiseOnlyFare: cruise-only price (no airfare)
+        - faresFrom:          lowest current fare (may reflect a discount)
+        - minCruiseOnlyFare:  cruise-only price (no airfare)
+        - minPromotionalFare: promotional/sale price
+        - minBrochureFare:    original brochure/rack price (used as original_price)
         """
-        categories = []
+        brochure_price = self._parse_price(raw.get("minBrochureFare"))
 
-        price_fields = [
+        # Current price candidates in preference order
+        current_candidates = [
             ("minCruiseOnlyFare", "CRZONLY", "Cruise Only"),
-            ("minPromotionalFare", "PROMO", "Promotional Fare"),
-            ("faresFrom", "BEST", "Best Available"),
-            ("minBrochureFare", "BROCHURE", "Brochure Fare"),
+            ("minPromotionalFare", "PROMO",   "Promotional Fare"),
+            ("faresFrom",          "BEST",    "Best Available"),
         ]
 
-        for field, code, name in price_fields:
-            val = raw.get(field)
-            price = self._parse_price(val)
-            if price is not None and price > 0:
+        categories = []
+        for field, code, name in current_candidates:
+            current = self._parse_price(raw.get(field))
+            if current is not None and current > 0:
+                # Show brochure as original_price only when it's higher than current
+                original = (
+                    brochure_price
+                    if brochure_price and brochure_price > current
+                    else None
+                )
                 categories.append({
                     "category_code": code,
                     "category_name": name,
-                    "price_per_person": price,
+                    "price_per_person": current,
+                    "original_price": original,
                     "currency": "USD",
                     "availability": "available",
                 })
 
-        # Deduplicate if multiple fields have the same price
+        # Deduplicate by current price
         seen_prices: set[float] = set()
         deduped = []
         for cat in categories:
@@ -343,11 +350,23 @@ class OceaniaCruisesScraper(BaseScraper):
                 seen_prices.add(p)
                 deduped.append(cat)
 
+        # Fall back to brochure price alone if no current price found
+        if not deduped and brochure_price and brochure_price > 0:
+            deduped = [{
+                "category_code": "BROCHURE",
+                "category_name": "Brochure Fare",
+                "price_per_person": brochure_price,
+                "original_price": None,
+                "currency": "USD",
+                "availability": "available",
+            }]
+
         if not deduped:
             deduped = [{
                 "category_code": "N/A",
                 "category_name": "Price on request",
                 "price_per_person": None,
+                "original_price": None,
                 "currency": "USD",
                 "availability": "unknown",
             }]

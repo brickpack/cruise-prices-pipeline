@@ -343,9 +343,33 @@ a:hover { color: var(--gold-light); text-decoration: underline; }
 .badge-explora  { background: rgba(200, 169, 81, 0.15); color: var(--gold); }
 .badge-oceania  { background: rgba(60, 130, 200, 0.15); color: #64a8d8; }
 
+.price-col { white-space: nowrap; }
+
 .price-cell { font-weight: 700; color: var(--gold); font-family: var(--font-mono); }
 .price-cell.price-down { color: var(--green); }
 .price-cell.price-up   { color: var(--red); }
+
+/* Original (pre-discount) price shown as struck-through */
+.orig-price {
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  text-decoration: line-through;
+  margin-left: 0.4rem;
+}
+
+/* Percentage discount badge */
+.discount-badge {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.1rem 0.35rem;
+  border-radius: 3px;
+  background: rgba(74, 222, 128, 0.15);
+  color: var(--green);
+  margin-left: 0.3rem;
+  vertical-align: middle;
+}
 
 .price-delta {
   font-size: 0.7rem;
