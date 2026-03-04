@@ -324,7 +324,7 @@ class OceaniaCruisesScraper(BaseScraper):
 
         for field, code, name in price_fields:
             val = raw.get(field)
-            price = self.safe_float(val)
+            price = self._parse_price(val)
             if price is not None and price > 0:
                 categories.append({
                     "category_code": code,
@@ -378,6 +378,27 @@ class OceaniaCruisesScraper(BaseScraper):
     # ------------------------------------------------------------------
     # Utilities
     # ------------------------------------------------------------------
+
+    @staticmethod
+    def _parse_price(value: Any) -> float | None:
+        """
+        Parse an Oceania price field which may be a formatted string like '$5,480'
+        or a numeric value like 5480 or 5480.0.
+        """
+        if value is None:
+            return None
+        # If it's already a number, return it directly
+        if isinstance(value, (int, float)):
+            return float(value)
+        # Strip currency formatting: '$5,480' → '5480'
+        s = str(value).strip()
+        s = s.replace('$', '').replace(',', '').replace(' ', '')
+        if not s:
+            return None
+        try:
+            return float(s)
+        except (ValueError, TypeError):
+            return None
 
     @staticmethod
     def _parse_oceania_date(value: Any) -> str | None:
