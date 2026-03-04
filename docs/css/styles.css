@@ -580,3 +580,108 @@ a:hover { color: var(--gold-light); text-decoration: underline; }
   .dashboard-grid { grid-template-columns: 1fr; }
   .filter-bar { grid-template-columns: 1fr; }
 }
+
+/* =========================================================
+   Alerts panel
+   ========================================================= */
+
+.alerts-container {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 1rem 0 3rem;
+}
+
+.alerts-hero {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.alerts-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--gold);
+  margin: 0 0 0.75rem;
+}
+
+.alerts-subtitle {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.alert-form {
+  background: var(--navy-mid);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  padding: 2rem;
+}
+
+.alert-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem 1.5rem;
+  margin-bottom: 1.75rem;
+}
+
+.alert-form-grid .filter-group:first-child {
+  grid-column: 1 / -1; /* email spans full width */
+}
+
+.required {
+  color: var(--gold);
+}
+
+.alert-form-footer {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.alert-submit-btn {
+  background: var(--gold);
+  color: var(--navy);
+  border: none;
+  border-radius: 6px;
+  padding: 0.65rem 1.75rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  white-space: nowrap;
+}
+
+.alert-submit-btn:hover  { opacity: 0.85; }
+.alert-submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.alert-fine-print {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.alert-feedback {
+  margin-top: 1.25rem;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.alert-success {
+  background: rgba(74, 222, 128, 0.12);
+  color: var(--green);
+  border: 1px solid rgba(74, 222, 128, 0.3);
+}
+
+.alert-error {
+  background: rgba(248, 113, 113, 0.12);
+  color: var(--red);
+  border: 1px solid rgba(248, 113, 113, 0.3);
+}
+
+@media (max-width: 540px) {
+  .alert-form-grid { grid-template-columns: 1fr; }
+  .alert-form-grid .filter-group:first-child { grid-column: 1; }
+}

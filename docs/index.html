@@ -41,6 +41,7 @@
     <button class="nav-tab"        role="tab" aria-selected="false" data-tab="prices"      aria-controls="panel-prices">Price Table</button>
     <button class="nav-tab"        role="tab" aria-selected="false" data-tab="history"     aria-controls="panel-history">Price History</button>
     <button class="nav-tab"        role="tab" aria-selected="false" data-tab="comparison"  aria-controls="panel-comparison">Compare</button>
+    <button class="nav-tab"        role="tab" aria-selected="false" data-tab="alerts"      aria-controls="panel-alerts">🔔 Alerts</button>
   </nav>
 
   <!-- ===== MAIN CONTENT ===== -->
@@ -205,6 +206,77 @@
             <div class="no-results">Loading…</div>
           </div>
         </div>
+      </div>
+
+    </section>
+
+    <!-- ── ALERTS ── -->
+    <section id="panel-alerts" class="tab-panel" role="tabpanel" aria-labelledby="tab-alerts" style="display:none">
+
+      <div class="alerts-container">
+        <div class="alerts-hero">
+          <h2 class="alerts-title">Price Drop Alerts</h2>
+          <p class="alerts-subtitle">Get an email when a voyage matching your criteria drops in price. Set your filters and we'll notify you daily if anything changes.</p>
+        </div>
+
+        <form id="alert-form" class="alert-form" novalidate>
+          <div class="alert-form-grid">
+
+            <div class="filter-group">
+              <label class="filter-label" for="alert-email">Email Address <span class="required">*</span></label>
+              <input type="email" class="filter-control" id="alert-email" placeholder="you@example.com" required>
+            </div>
+
+            <div class="filter-group">
+              <label class="filter-label" for="alert-line">Cruise Line</label>
+              <select class="filter-control" id="alert-line">
+                <option value="">Any Line</option>
+                <option value="explora_journeys">Explora Journeys</option>
+                <option value="oceania_cruises">Oceania Cruises</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label class="filter-label" for="alert-region">Region</label>
+              <select class="filter-control" id="alert-region">
+                <option value="">Any Region</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label class="filter-label" for="alert-month">Departure Month</label>
+              <select class="filter-control" id="alert-month">
+                <option value="">Any Month</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label class="filter-label" for="alert-max-price">Max Price (pp)</label>
+              <input type="number" class="filter-control" id="alert-max-price" placeholder="e.g. 5000" min="0" step="500">
+            </div>
+
+            <div class="filter-group">
+              <label class="filter-label" for="alert-max-duration">Max Duration (nights)</label>
+              <input type="number" class="filter-control" id="alert-max-duration" placeholder="e.g. 14" min="1" step="1">
+            </div>
+
+          </div>
+
+          <div class="alert-form-footer">
+            <button type="submit" class="alert-submit-btn" id="alert-submit">
+              <span id="alert-btn-text">Subscribe to Alerts</span>
+            </button>
+            <p class="alert-fine-print">You can unsubscribe at any time via the link in any alert email.</p>
+          </div>
+
+          <div id="alert-success" class="alert-feedback alert-success" style="display:none">
+            ✓ You're subscribed! You'll receive an email if a matching voyage drops in price.
+          </div>
+          <div id="alert-error" class="alert-feedback alert-error" style="display:none">
+            Something went wrong. Please try again.
+          </div>
+        </form>
+
       </div>
 
     </section>

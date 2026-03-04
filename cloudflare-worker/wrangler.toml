@@ -1,0 +1,9 @@
+name = "cruise-alerts"
+main = "worker.js"
+compatibility_date = "2024-01-01"
+
+# Deploy with: npx wrangler deploy
+# Set secrets with:
+#   npx wrangler secret put GITHUB_TOKEN
+#   npx wrangler secret put GITHUB_REPO   (value: brickpack/cruise-prices-pipeline)
+#   npx wrangler secret put ALLOWED_ORIGIN (value: https://brickpack.github.io)

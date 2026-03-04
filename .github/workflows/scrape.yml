@@ -41,6 +41,17 @@ jobs:
         # so any partial data is preserved
         continue-on-error: true
 
+      - name: Send price alert emails
+        # Only runs if RESEND_API_KEY secret is configured
+        if: env.RESEND_API_KEY != ''
+        run: python scrapers/send_alerts.py
+        continue-on-error: true  # never block the data commit if alerts fail
+        env:
+          RESEND_API_KEY:  ${{ secrets.RESEND_API_KEY }}
+          RESEND_FROM:     ${{ secrets.RESEND_FROM || 'Cruise Price Alerts <alerts@cruise-prices.dev>' }}
+          SITE_URL:        "https://brickpack.github.io/cruise-prices-pipeline"
+          WORKER_URL:      ${{ secrets.WORKER_URL }}
+
       - name: Copy data files for GitHub Pages
         run: |
           mkdir -p docs/data
@@ -52,6 +63,8 @@ jobs:
           git config user.name "cruise-price-bot"
           git config user.email "bot@users.noreply.github.com"
           git add data/ docs/data/
+          # Also commit alerts.json if last_notified timestamps were updated
+          git add data/alerts.json 2>/dev/null || true
           # Only commit if there are staged changes
           git diff --staged --quiet || git commit -m "data: scrape $(date -u +%Y-%m-%d)"
           git push

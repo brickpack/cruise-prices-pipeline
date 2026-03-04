@@ -11,6 +11,7 @@
 
 import { initFilters, renderTable } from './filters.js';
 import { initCharts } from './charts.js';
+import { initAlerts } from './alerts.js';
 
 // ---------------------------------------------------------------------------
 // Data paths — derived from this script's URL so the base path is always correct
@@ -74,6 +75,7 @@ async function loadData() {
     initFilters(state.voyages);
     initCharts(state.manifest);
     initComparison();
+    initAlerts();
 
     // Update header
     const ts = state.latest?.generated_at;
