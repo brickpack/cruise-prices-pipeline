@@ -9,7 +9,7 @@
  * - Bootstrap filters.js and charts.js
  */
 
-import { initFilters, renderTable } from './filters.js';
+import { initFilters, renderTable, applyFilterAndShow } from './filters.js';
 import { initCharts } from './charts.js';
 import { initAlerts } from './alerts.js';
 
@@ -169,20 +169,33 @@ function renderStats() {
   const priceDrops = countPriceDrops(state.voyages);
 
   const cards = [
-    { label: 'Total Voyages', value: total, sub: `as of ${scrapeDate}` },
-    { label: 'Explora Journeys', value: exploraCount, sub: 'voyages tracked' },
-    { label: 'Oceania Cruises', value: oceaniaCount, sub: 'voyages tracked' },
-    { label: 'From Price (pp)', value: lowestPrice ? `$${lowestPrice.toLocaleString()}` : '—', sub: 'lowest available' },
-    { label: 'Price Drops', value: priceDrops, sub: 'since last scrape' },
+    { label: 'Total Voyages',    value: total,                                              sub: `as of ${scrapeDate}`,   filter: {} },
+    { label: 'Explora Journeys', value: exploraCount,                                       sub: 'voyages tracked',        filter: { line: 'explora_journeys' } },
+    { label: 'Oceania Cruises',  value: oceaniaCount,                                       sub: 'voyages tracked',        filter: { line: 'oceania_cruises' } },
+    { label: 'From Price (pp)',  value: lowestPrice ? `$${lowestPrice.toLocaleString()}` : '—', sub: 'lowest available',  filter: {} },
+    { label: 'Discounted',       value: countDiscounted(state.voyages),                     sub: 'voyages on sale',        filter: { onlyDiscounted: true } },
   ];
 
   grid.innerHTML = cards.map(c => `
-    <div class="stat-card">
+    <div class="stat-card stat-card-link" role="button" tabindex="0"
+         data-filter='${JSON.stringify(c.filter)}'
+         title="View in Price Table">
       <div class="stat-label">${c.label}</div>
       <div class="stat-value">${c.value}</div>
       <div class="stat-sub">${c.sub}</div>
     </div>
   `).join('');
+
+  // Wire up click handlers
+  grid.querySelectorAll('.stat-card-link').forEach(card => {
+    const handler = () => {
+      const filter = JSON.parse(card.dataset.filter);
+      applyFilterAndShow(filter);
+      activateTab('prices');
+    };
+    card.addEventListener('click', handler);
+    card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handler(); } });
+  });
 }
 
 function renderRecentChanges() {
@@ -339,6 +352,15 @@ function countPriceDrops(voyages) {
   return voyages.filter(v => {
     const curr = lowestPrice(v);
     return curr != null && v._prev_price != null && curr < v._prev_price;
+  }).length;
+}
+
+function countDiscounted(voyages) {
+  return voyages.filter(v => {
+    const price = lowestPrice(v);
+    const orig  = (v.cabin_categories ?? []).map(c => c.original_price).filter(p => p != null && p > 0);
+    const minOrig = orig.length ? Math.min(...orig) : null;
+    return price != null && minOrig != null && minOrig > price;
   }).length;
 }
 

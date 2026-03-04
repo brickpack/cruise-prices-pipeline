@@ -149,6 +149,20 @@ a:hover { color: var(--gold-light); text-decoration: underline; }
   transform: translateY(-2px);
 }
 
+.stat-card-link {
+  cursor: pointer;
+  user-select: none;
+}
+
+.stat-card-link:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+.stat-card-link:active {
+  transform: translateY(0);
+}
+
 .stat-label {
   font-size: 0.75rem;
   font-weight: 600;

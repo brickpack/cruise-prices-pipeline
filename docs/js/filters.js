@@ -22,6 +22,7 @@ const _filters = {
   month: '',
   maxDuration: null,
   maxPrice: null,
+  onlyDiscounted: false,
 };
 
 // ---------------------------------------------------------------------------
@@ -33,6 +34,32 @@ export function initFilters(voyages) {
   populateFilterDropdowns(voyages);
   attachFilterListeners();
   attachSortListeners();
+  renderTable();
+}
+
+/**
+ * Set one or more filters programmatically, update the UI controls, and re-render.
+ * Used by stat card clicks on the Dashboard to jump to the Price Table with a preset filter.
+ *
+ * @param {Object} opts  - subset of: { line, region, month, maxDuration, maxPrice, onlyDiscounted }
+ */
+export function applyFilterAndShow(opts = {}) {
+  // Reset everything first so only the requested filter is active
+  _filters.line        = opts.line        ?? '';
+  _filters.region      = opts.region      ?? '';
+  _filters.month       = opts.month       ?? '';
+  _filters.maxDuration = opts.maxDuration ?? null;
+  _filters.maxPrice    = opts.maxPrice    ?? null;
+  _filters.onlyDiscounted = opts.onlyDiscounted ?? false;
+
+  // Sync DOM controls
+  const set = (id, val) => { const el = document.getElementById(id); if (el) el.value = val ?? ''; };
+  set('filter-line',      _filters.line);
+  set('filter-region',    _filters.region);
+  set('filter-month',     _filters.month);
+  set('filter-duration',  _filters.maxDuration ?? '');
+  set('filter-max-price', _filters.maxPrice ?? '');
+
   renderTable();
 }
 
@@ -131,6 +158,7 @@ function resetFilters() {
   _filters.month = '';
   _filters.maxDuration = null;
   _filters.maxPrice = null;
+  _filters.onlyDiscounted = false;
 
   document.getElementById('filter-line').value      = '';
   document.getElementById('filter-region').value    = '';
@@ -194,6 +222,12 @@ function applyFilters(voyages) {
     if (_filters.maxPrice != null) {
       const price = lowestPrice(v);
       if (price != null && price > _filters.maxPrice) return false;
+    }
+    if (_filters.onlyDiscounted) {
+      const price = lowestPrice(v);
+      const orig  = (v.cabin_categories ?? []).map(c => c.original_price).filter(p => p != null && p > 0);
+      const minOrig = orig.length ? Math.min(...orig) : null;
+      if (!(price != null && minOrig != null && minOrig > price)) return false;
     }
     return true;
   });

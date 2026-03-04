@@ -149,7 +149,7 @@ def build_email_html(voyages: list[dict], subscription: dict, site_url: str, wor
     <!-- Header -->
     <div style="text-align:center;margin-bottom:28px">
       <h1 style="color:#c8a951;font-size:1.4rem;margin:0 0 6px">🚢 Cruise Price Alerts</h1>
-      <p style="color:#8ba0b8;font-size:0.85rem;margin:0">{len(voyages)} voyage{"s" if len(voyages) != 1 else ""} matching your criteria · {date.today().isoformat()}</p>
+      <p style="color:#8ba0b8;font-size:0.85rem;margin:0">{len(voyages)} new voyage{"s" if len(voyages) != 1 else ""} matching your criteria · {date.today().isoformat()}</p>
       <p style="color:#8ba0b8;font-size:0.8rem;margin:6px 0 0;font-style:italic">{criteria_str}</p>
     </div>
 
@@ -249,12 +249,21 @@ def main() -> int:
             logger.debug("No matches for %s", email)
             continue
 
-        logger.info("%d matches for %s", len(matching), email)
+        # Only notify about voyages that haven't been notified before
+        already_notified = set(sub.get("notified_voyage_ids", []))
+        new_matches = [v for v in matching if v.get("voyage_id") not in already_notified]
 
-        subject = f"🚢 {len(matching)} cruise voyage{'s' if len(matching) != 1 else ''} matching your alert"
-        html    = build_email_html(matching, sub, site_url, worker_url)
+        if not new_matches:
+            logger.debug("No new matches (all %d already notified) for %s", len(matching), email)
+            continue
+
+        logger.info("%d new matches for %s", len(new_matches), email)
+
+        subject = f"🚢 {len(new_matches)} new cruise voyage{'s' if len(new_matches) != 1 else ''} matching your alert"
+        html    = build_email_html(new_matches, sub, site_url, worker_url)
 
         if send_email(email, subject, html, api_key, from_addr):
+            sub["notified_voyage_ids"] = sorted(already_notified | {v["voyage_id"] for v in new_matches if v.get("voyage_id")})
             sub["last_notified"] = datetime.utcnow().isoformat() + "Z"
             updated = True
             sent_count += 1
