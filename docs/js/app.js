@@ -13,10 +13,11 @@ import { initFilters, renderTable } from './filters.js';
 import { initCharts } from './charts.js';
 
 // ---------------------------------------------------------------------------
-// Data paths — relative to docs/ so they work on both GitHub Pages and locally
+// Data paths — derived from this script's URL so the base path is always correct
+// whether served from / (local) or /cruise-prices-pipeline/ (GitHub Pages)
 // ---------------------------------------------------------------------------
 
-const DATA_BASE = './data';
+const DATA_BASE = new URL('../data', import.meta.url).href;
 const LATEST_URL = `${DATA_BASE}/latest.json`;
 const MANIFEST_URL = `${DATA_BASE}/manifest.json`;
 
