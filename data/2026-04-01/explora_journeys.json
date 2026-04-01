@@ -1,0 +1,3303 @@
+{
+  "scrape_date": "2026-04-01",
+  "cruise_line": "explora_journeys",
+  "record_count": 103,
+  "voyages": [
+    {
+      "voyage_id": "20b3b468b68e1c977050d5d116e417f3625bb638fb9d9544e8c471128517",
+      "voyage_name": "A Journey of Stone Cities & Shimmering Waters",
+      "ship_name": "EXPLORA I",
+      "departure_port": "La Valletta",
+      "departure_date": "2026-04-06",
+      "return_date": "2026-04-13",
+      "duration_nights": 7,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 4985.0,
+          "original_price": 6650.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 6230.0,
+          "original_price": 8315.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/mlafsa-07-v1?id-journey=EX20260406MLAFSA",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "c1cacc9091853b51f3f4025811aea1404e371ceadc3da25f7d8283726d4d",
+      "voyage_name": "A Journey of Azure Islands & Volcanic Wonders",
+      "ship_name": "EXPLORA II",
+      "departure_port": "Miami",
+      "departure_date": "2026-04-09",
+      "return_date": "2026-04-22",
+      "duration_nights": 13,
+      "region": "Grand Journeys",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 5905.0,
+          "original_price": 6950.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 7380.0,
+          "original_price": 8690.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/tra/journeys/miacad-13-v1?id-journey=EP20260409MIACAD",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "830a6ef3da191fb708e751b0c4f40fcf295577270c44aab107f57aa3db0a",
+      "voyage_name": "A Grand Journey to Atlantic Blues & Iberian Shores",
+      "ship_name": "EXPLORA II",
+      "departure_port": "Miami",
+      "departure_date": "2026-04-09",
+      "return_date": "2026-04-25",
+      "duration_nights": 16,
+      "region": "Grand Journeys",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 7190.0,
+          "original_price": 9400.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 8985.0,
+          "original_price": 11515.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/tra/journeys/miabcn-16-v2?id-journey=EP20260409MIABCN",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "f153893107a6ce37d619910b12f779e66197cdc8bb68ec21ccc651fcff80",
+      "voyage_name": "A Grand Journey Across the Ocean from Azure Dreams to the Legendary Shores",
+      "ship_name": "EXPLORA II",
+      "departure_port": "Miami",
+      "departure_date": "2026-04-09",
+      "return_date": "2026-05-04",
+      "duration_nights": 25,
+      "region": "Grand Journeys",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 19160.0,
+          "original_price": 25250.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 28720.0,
+          "original_price": 37875.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/tra/journeys/miapir-25-v1?id-journey=EP20260409MIAPIR",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "a0532c2228d9e43e080e620aa0d8ad8192cef1ef700ab6cf053f6f2cc9da",
+      "voyage_name": "A Journey From Venetian Shores to Aegean Isles",
+      "ship_name": "EXPLORA I",
+      "departure_port": "Fusina (Venice)",
+      "departure_date": "2026-04-13",
+      "return_date": "2026-04-24",
+      "duration_nights": 11,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 7275.0,
+          "original_price": 9700.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 9090.0,
+          "original_price": 12125.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/fsapir-11-v5?id-journey=EX20260413FSAPIR",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "7789e4add2f1652b673f19b723318818a230ee86df4ef0c3fed1b8c27740",
+      "voyage_name": "An Extended Journey Across Waters of Light & Legend",
+      "ship_name": "EXPLORA I",
+      "departure_port": "Fusina (Venice)",
+      "departure_date": "2026-04-13",
+      "return_date": "2026-05-03",
+      "duration_nights": 20,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 12560.0,
+          "original_price": 17650.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 15670.0,
+          "original_price": 22065.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/fsabcn-20-v2?id-journey=EX20260413FSABCN",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "398ce5d74900d6c8f24440d3725ab471bbe76218e0e9ec7163bac375d999",
+      "voyage_name": "A Journey of Sculpted Isles & Timeless Civilisations",
+      "ship_name": "EXPLORA I",
+      "departure_port": "Piraeus (Athens)",
+      "departure_date": "2026-04-24",
+      "return_date": "2026-04-29",
+      "duration_nights": 5,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 3150.0,
+          "original_price": 4200.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 3935.0,
+          "original_price": 5250.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/pirmla-05-v1?id-journey=EX20260424PIRMLA",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "f63de1e876d9acb7c30c59ac78c517d3010c923aabf116ff21e145e21472",
+      "voyage_name": "A Journey through the Marvels of the Mediterranean & Spirited Cities",
+      "ship_name": "EXPLORA I",
+      "departure_port": "Piraeus (Athens)",
+      "departure_date": "2026-04-24",
+      "return_date": "2026-05-03",
+      "duration_nights": 9,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 5660.0,
+          "original_price": 7550.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 7075.0,
+          "original_price": 9440.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/pirbcn-09-v3?id-journey=EX20260424PIRBCN",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "fd334e75a998c49e0f9fa19ecf7bf0fd94f22b4d11038f1a120a093f72ef",
+      "voyage_name": "An Extended Journey of Mediterranean Marvels & Spirited Streets",
+      "ship_name": "EXPLORA I",
+      "departure_port": "Piraeus (Athens)",
+      "departure_date": "2026-04-24",
+      "return_date": "2026-05-13",
+      "duration_nights": 19,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 13235.0,
+          "original_price": 18650.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 16495.0,
+          "original_price": 23315.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/pircvv-19-v2?id-journey=EX20260424PIRCVV",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "8cfeaec17ed5dc7b34d59cb980815339c3fd6f8db55df299043726fe0314",
+      "voyage_name": "A Journey through Riviera Elegance & Coastal Splendour",
+      "ship_name": "EXPLORA II",
+      "departure_port": "Barcelona",
+      "departure_date": "2026-04-25",
+      "return_date": "2026-04-29",
+      "duration_nights": 4,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 2640.0,
+          "original_price": 3300.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 3300.0,
+          "original_price": 4125.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/bcncvv-04-v1?id-journey=EP20260425BCNCVV",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "900494b9295bdd49ef7053b8410cbc5f7563e1cb33abe81bff2e86870998",
+      "voyage_name": "A Journey of Golden Coastlines & Ancient Wonders",
+      "ship_name": "EXPLORA II",
+      "departure_port": "Barcelona",
+      "departure_date": "2026-04-25",
+      "return_date": "2026-05-04",
+      "duration_nights": 9,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 6240.0,
+          "original_price": 7800.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 7800.0,
+          "original_price": 9750.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/bcnpir-09-v2?id-journey=EP20260425BCNPIR",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "2976b36693f5925530643c2d30c9e7e67e8d6caa73628dc9238bd9f787c9",
+      "voyage_name": "An Extended Journey of Light, Stone & Endless Views",
+      "ship_name": "EXPLORA II",
+      "departure_port": "Barcelona",
+      "departure_date": "2026-04-25",
+      "return_date": "2026-05-11",
+      "duration_nights": 16,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 10240.0,
+          "original_price": 13550.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 15120.0,
+          "original_price": 20015.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/bcnpir-16-v3?id-journey=EP20260425BCNPI1",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "830a6ef3da191fb708e751b0c4f40fcf295577270c44aab107f57aa3db0a",
+      "voyage_name": "A Grand Journey to Atlantic Blues & Iberian Shores",
+      "ship_name": "EXPLORA II",
+      "departure_port": "Miami",
+      "departure_date": "2026-04-09",
+      "return_date": "2026-04-25",
+      "duration_nights": 16,
+      "region": "Grand Journeys",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 7190.0,
+          "original_price": 9400.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 8985.0,
+          "original_price": 11515.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/tra/journeys/miabcn-16-v2?id-journey=EP20260409MIABCN",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "f153893107a6ce37d619910b12f779e66197cdc8bb68ec21ccc651fcff80",
+      "voyage_name": "A Grand Journey Across the Ocean from Azure Dreams to the Legendary Shores",
+      "ship_name": "EXPLORA II",
+      "departure_port": "Miami",
+      "departure_date": "2026-04-09",
+      "return_date": "2026-05-04",
+      "duration_nights": 25,
+      "region": "Grand Journeys",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 19160.0,
+          "original_price": 25250.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 28720.0,
+          "original_price": 37875.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/tra/journeys/miapir-25-v1?id-journey=EP20260409MIAPIR",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "7789e4add2f1652b673f19b723318818a230ee86df4ef0c3fed1b8c27740",
+      "voyage_name": "An Extended Journey Across Waters of Light & Legend",
+      "ship_name": "EXPLORA I",
+      "departure_port": "Fusina (Venice)",
+      "departure_date": "2026-04-13",
+      "return_date": "2026-05-03",
+      "duration_nights": 20,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 12560.0,
+          "original_price": 17650.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 15670.0,
+          "original_price": 22065.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/fsabcn-20-v2?id-journey=EX20260413FSABCN",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "a0532c2228d9e43e080e620aa0d8ad8192cef1ef700ab6cf053f6f2cc9da",
+      "voyage_name": "A Journey From Venetian Shores to Aegean Isles",
+      "ship_name": "EXPLORA I",
+      "departure_port": "Fusina (Venice)",
+      "departure_date": "2026-04-13",
+      "return_date": "2026-04-24",
+      "duration_nights": 11,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 7275.0,
+          "original_price": 9700.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 9090.0,
+          "original_price": 12125.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/fsapir-11-v5?id-journey=EX20260413FSAPIR",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "398ce5d74900d6c8f24440d3725ab471bbe76218e0e9ec7163bac375d999",
+      "voyage_name": "A Journey of Sculpted Isles & Timeless Civilisations",
+      "ship_name": "EXPLORA I",
+      "departure_port": "Piraeus (Athens)",
+      "departure_date": "2026-04-24",
+      "return_date": "2026-04-29",
+      "duration_nights": 5,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 3150.0,
+          "original_price": 4200.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 3935.0,
+          "original_price": 5250.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/pirmla-05-v1?id-journey=EX20260424PIRMLA",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "fd334e75a998c49e0f9fa19ecf7bf0fd94f22b4d11038f1a120a093f72ef",
+      "voyage_name": "An Extended Journey of Mediterranean Marvels & Spirited Streets",
+      "ship_name": "EXPLORA I",
+      "departure_port": "Piraeus (Athens)",
+      "departure_date": "2026-04-24",
+      "return_date": "2026-05-13",
+      "duration_nights": 19,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 13235.0,
+          "original_price": 18650.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 16495.0,
+          "original_price": 23315.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/pircvv-19-v2?id-journey=EX20260424PIRCVV",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "f63de1e876d9acb7c30c59ac78c517d3010c923aabf116ff21e145e21472",
+      "voyage_name": "A Journey through the Marvels of the Mediterranean & Spirited Cities",
+      "ship_name": "EXPLORA I",
+      "departure_port": "Piraeus (Athens)",
+      "departure_date": "2026-04-24",
+      "return_date": "2026-05-03",
+      "duration_nights": 9,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 5660.0,
+          "original_price": 7550.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 7075.0,
+          "original_price": 9440.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/pirbcn-09-v3?id-journey=EX20260424PIRBCN",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "900494b9295bdd49ef7053b8410cbc5f7563e1cb33abe81bff2e86870998",
+      "voyage_name": "A Journey of Golden Coastlines & Ancient Wonders",
+      "ship_name": "EXPLORA II",
+      "departure_port": "Barcelona",
+      "departure_date": "2026-04-25",
+      "return_date": "2026-05-04",
+      "duration_nights": 9,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 6240.0,
+          "original_price": 7800.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 7800.0,
+          "original_price": 9750.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/bcnpir-09-v2?id-journey=EP20260425BCNPIR",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "8cfeaec17ed5dc7b34d59cb980815339c3fd6f8db55df299043726fe0314",
+      "voyage_name": "A Journey through Riviera Elegance & Coastal Splendour",
+      "ship_name": "EXPLORA II",
+      "departure_port": "Barcelona",
+      "departure_date": "2026-04-25",
+      "return_date": "2026-04-29",
+      "duration_nights": 4,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 2640.0,
+          "original_price": 3300.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 3300.0,
+          "original_price": 4125.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/bcncvv-04-v1?id-journey=EP20260425BCNCVV",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "2976b36693f5925530643c2d30c9e7e67e8d6caa73628dc9238bd9f787c9",
+      "voyage_name": "An Extended Journey of Light, Stone & Endless Views",
+      "ship_name": "EXPLORA II",
+      "departure_port": "Barcelona",
+      "departure_date": "2026-04-25",
+      "return_date": "2026-05-11",
+      "duration_nights": 16,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 10240.0,
+          "original_price": 13550.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 15120.0,
+          "original_price": 20015.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/bcnpir-16-v3?id-journey=EP20260425BCNPI1",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "0adddaa2258ccd2014467d8440eecf316dd448834f1dff81d3e409c2531e",
+      "voyage_name": "A Journey through Legendary Crossroads & Island Spirit",
+      "ship_name": "EXPLORA I",
+      "departure_port": "La Valletta",
+      "departure_date": "2026-04-29",
+      "return_date": "2026-05-03",
+      "duration_nights": 4,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 2510.0,
+          "original_price": 3350.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 3140.0,
+          "original_price": 4190.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/mlabcn-04-v1?id-journey=EX20260429MLABCN",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "1d6c0501773aacf22f7bf44bd687199c475c740755ad1bb0104190c7b118",
+      "voyage_name": "A Journey from Ancient Whispers to Aegean Wonders",
+      "ship_name": "EXPLORA II",
+      "departure_port": "Civitavecchia (Rome)",
+      "departure_date": "2026-04-29",
+      "return_date": "2026-05-04",
+      "duration_nights": 5,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 3485.0,
+          "original_price": 4100.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 4355.0,
+          "original_price": 5125.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/cvvpir-05-v1?id-journey=EP20260429CVVPIR",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "003c9bf0e7f5aa61a13c1da1d6232890871875cea906fc8f9e70bee17f13",
+      "voyage_name": "An Extended Journey through Architectural Wonders & Spectacular Landscapes",
+      "ship_name": "EXPLORA I",
+      "departure_port": "Barcelona",
+      "departure_date": "2026-05-03",
+      "return_date": "2026-05-20",
+      "duration_nights": 17,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 12185.0,
+          "original_price": 17200.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 15185.0,
+          "original_price": 21500.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/bcnbcn-17-v2?id-journey=EX20260503BCNBCN",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "5f9104187ad1d94f045244b53778e2fd799370094a97d0a5b3f4a1afa89d",
+      "voyage_name": "A Journey through Iberian Soul & Moorish Echoes",
+      "ship_name": "EXPLORA I",
+      "departure_port": "Barcelona",
+      "departure_date": "2026-05-03",
+      "return_date": "2026-05-08",
+      "duration_nights": 5,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 3375.0,
+          "original_price": 4500.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 5060.0,
+          "original_price": 6750.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/bcnctg-05-v1?id-journey=EX20260503BCNCTG",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "48ffeadfdb1201da361a1326c41d9e1c7d0a48caab37c4ee972bf8d4f813",
+      "voyage_name": "A Journey of Unique Architecture Seamlessely Blending Culture & Scenic Beauty",
+      "ship_name": "EXPLORA I",
+      "departure_port": "Barcelona",
+      "departure_date": "2026-05-03",
+      "return_date": "2026-05-13",
+      "duration_nights": 10,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 6710.0,
+          "original_price": 8950.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 8390.0,
+          "original_price": 11190.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/bcncvv-10-v2?id-journey=EX20260503BCNCVV",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "1d7d25da7135cd2307fe055151710d4bc18e44d3f264e82f2ad718e803f7",
+      "voyage_name": "A Journey Through Greek Isles & Hidden Shores",
+      "ship_name": "EXPLORA II",
+      "departure_port": "Piraeus (Athens)",
+      "departure_date": "2026-05-04",
+      "return_date": "2026-05-11",
+      "duration_nights": 7,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 5225.0,
+          "original_price": 6150.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 9145.0,
+          "original_price": 10765.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/pirpir-07-v13?id-journey=EP20260504PIRPIR",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "afb67bdd0a540a84e4ba744d24e4e1b10f8dddd0e9d60d9f5eaaf288aca2",
+      "voyage_name": "An Extended Journey of Island Rhythms & Adriatic Echoes",
+      "ship_name": "EXPLORA II",
+      "departure_port": "Piraeus (Athens)",
+      "departure_date": "2026-05-04",
+      "return_date": "2026-05-18",
+      "duration_nights": 14,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 11560.0,
+          "original_price": 13600.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 18785.0,
+          "original_price": 22100.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/pirfsa-14-v11?id-journey=EP20260504PIRFSA",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "d9aae98a7aae895e35157dd7386f56e5bcce7b1af1beb07abcfdbd6f61b8",
+      "voyage_name": "A Journey of Historic Beauty & Coastal Discovery",
+      "ship_name": "EXPLORA I",
+      "departure_port": "Cartagena",
+      "departure_date": "2026-05-08",
+      "return_date": "2026-05-13",
+      "duration_nights": 5,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 3785.0,
+          "original_price": 5050.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 5675.0,
+          "original_price": 7575.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/ctgcvv-05-v1?id-journey=EX20260508CTGCVV",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "7c778e429b47179fe786365293b9eb0afbbd7bd186a5e606468d7b10405b",
+      "voyage_name": "An Extended Journey of Marble Cities & Sapphire Seas",
+      "ship_name": "EXPLORA II",
+      "departure_port": "Piraeus (Athens)",
+      "departure_date": "2026-05-11",
+      "return_date": "2026-05-25",
+      "duration_nights": 14,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 12730.0,
+          "original_price": 14200.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 19095.0,
+          "original_price": 21300.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/pirpir-14-v13?id-journey=EP20260511PIRPIR",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "06bfb9e6cc5796662fe9606fd1c8e38c0279755626fe2c46c5a3e0254d3f",
+      "voyage_name": "A Journey of Lush Landscapes & Golden Enchantment",
+      "ship_name": "EXPLORA II",
+      "departure_port": "Piraeus (Athens)",
+      "departure_date": "2026-05-11",
+      "return_date": "2026-05-18",
+      "duration_nights": 7,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 5840.0,
+          "original_price": 6150.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 8760.0,
+          "original_price": 9225.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/pirfsa-07-v6?id-journey=EP20260511PIRFSA",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "ea6a8f22ad47fa4d15a66afc95b34307db7981e277ed85e76959a317482a",
+      "voyage_name": "A journey to Italian Hidden Gems & the Heartbeat of Catalan Culture",
+      "ship_name": "EXPLORA I",
+      "departure_port": "Civitavecchia (Rome)",
+      "departure_date": "2026-05-13",
+      "return_date": "2026-05-20",
+      "duration_nights": 7,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 5520.0,
+          "original_price": 6900.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 6900.0,
+          "original_price": 8625.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/cvvbcn-07-v9?id-journey=EX20260513CVVBCN",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "dbfed7fd6013a99fe6af100f0a7eac271ab44d7a742e19bd5ff2446d4058",
+      "voyage_name": "An Extended Journey from Italian Gems to Riviera Delights",
+      "ship_name": "EXPLORA I",
+      "departure_port": "Civitavecchia (Rome)",
+      "departure_date": "2026-05-13",
+      "return_date": "2026-05-27",
+      "duration_nights": 14,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 10480.0,
+          "original_price": 13800.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 14360.0,
+          "original_price": 18975.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/cvvbcn-14-v1?id-journey=EX20260513CVVBC1",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "5eff8889dbe675a2d6338427eb839802b4b0ca4501e8250e4f18ec3ff4a9",
+      "voyage_name": "A Journey to Adriatic Wonders & Ancient Secrets",
+      "ship_name": "EXPLORA II",
+      "departure_port": "Fusina (Venice)",
+      "departure_date": "2026-05-18",
+      "return_date": "2026-05-25",
+      "duration_nights": 7,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 6150.0,
+          "original_price": null,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 9225.0,
+          "original_price": null,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/fsapir-07-v17?id-journey=EP20260518FSAPIR",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "222c0a4a3155e8f172c0868de23758c3416a3044d92cf34ac242687eb30e",
+      "voyage_name": "An Extended Journey of Quiet Shores & Endless Blue",
+      "ship_name": "EXPLORA II",
+      "departure_port": "Fusina (Venice)",
+      "departure_date": "2026-05-18",
+      "return_date": "2026-06-01",
+      "duration_nights": 14,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 10980.0,
+          "original_price": 12900.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 15075.0,
+          "original_price": 17740.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/fsapir-14-v12?id-journey=EP20260518FSAPI1",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "e47ff7fed67195b81f3578b400d6fd9dddb35d1b8b0ab3abe4cd16bba3ac",
+      "voyage_name": "An Extended Journey of Cultural Treasures & Glittering Shorelines",
+      "ship_name": "EXPLORA I",
+      "departure_port": "Barcelona",
+      "departure_date": "2026-05-20",
+      "return_date": "2026-06-03",
+      "duration_nights": 14,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 11360.0,
+          "original_price": 14200.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 17040.0,
+          "original_price": 21300.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/bcnmcm-14-v2?id-journey=EX20260520BCNMCM",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "65bdf4ca5ed592be5a1d7531e6c5d95309a8d2191f2d2406df98a5fa8942",
+      "voyage_name": "A Journey of Bewitching Scenery & Cultural Treasures",
+      "ship_name": "EXPLORA I",
+      "departure_port": "Barcelona",
+      "departure_date": "2026-05-20",
+      "return_date": "2026-05-27",
+      "duration_nights": 7,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 5520.0,
+          "original_price": 6900.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 8280.0,
+          "original_price": 10350.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/bcnbcn-07-v2?id-journey=EX20260520BCNBCN",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "a21b01a50188d17db501104f6f18217183664d8cc51f020c6941c81a48c9",
+      "voyage_name": "An Extended Journey of Island Light & Adriatic Horizons",
+      "ship_name": "EXPLORA II",
+      "departure_port": "Piraeus (Athens)",
+      "departure_date": "2026-05-25",
+      "return_date": "2026-06-08",
+      "duration_nights": 14,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 11925.0,
+          "original_price": 14000.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 14895.0,
+          "original_price": 17500.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/pirfsa-14-v8?id-journey=EP20260525PIRFSA",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "24a4a394b3a7e82f23923e191d329caf1fc76c76c4b2e2bc4433632eb3a6",
+      "voyage_name": "A Journey Through Cycladic Charm & Ionian Shores",
+      "ship_name": "EXPLORA II",
+      "departure_port": "Piraeus (Athens)",
+      "departure_date": "2026-05-25",
+      "return_date": "2026-06-01",
+      "duration_nights": 7,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 5535.0,
+          "original_price": 6150.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 6920.0,
+          "original_price": 7690.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/pirpir-07-v12?id-journey=EP20260525PIRPIR",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "c53505b9d217f8d5fab6a3de13b8a2f9c5e96580a5b006253cd6592b6851",
+      "voyage_name": "An Extended Journey From Riviera Icons to Grand Prix™ Glamour",
+      "ship_name": "EXPLORA I",
+      "departure_port": "Barcelona",
+      "departure_date": "2026-05-27",
+      "return_date": "2026-06-15",
+      "duration_nights": 19,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 28000.0,
+          "original_price": null,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 51000.0,
+          "original_price": null,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/bcnbcn-19-v4?id-journey=EX20260527BCNBCN",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "4eab4b581731862b3ddf6d0a70da8df9ecf626b50140889ce6940a1525cc",
+      "voyage_name": "A Journey of Authentic Flavours & Glittering Shorelines",
+      "ship_name": "EXPLORA I",
+      "departure_port": "Barcelona",
+      "departure_date": "2026-05-27",
+      "return_date": "2026-06-03",
+      "duration_nights": 7,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 5610.0,
+          "original_price": 6600.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 8415.0,
+          "original_price": 9900.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/bcnmcm-07-v2?id-journey=EX20260527BCNMCM",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "f87e60247eb0d10668fd9cdd5c87e464a2416718300f93b1db17eb96368b",
+      "voyage_name": "A Journey From Catalan Colours to Roman Grandeur",
+      "ship_name": "EXPLORA I",
+      "departure_port": "Barcelona",
+      "departure_date": "2026-05-27",
+      "return_date": "2026-06-02",
+      "duration_nights": 6,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 4800.0,
+          "original_price": 5650.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 6000.0,
+          "original_price": 7065.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/bcncvv-06-v2?id-journey=EX20260527BCNCVV",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "ad72dad9de458675aefe90c3738bbd1b55e094d03a7a021d55271749bca9",
+      "voyage_name": "An Extended Journey from Mediterranean Radiance to a Legendary Monaco Race Weekend",
+      "ship_name": "EXPLORA I",
+      "departure_port": "Barcelona",
+      "departure_date": "2026-05-27",
+      "return_date": "2026-06-08",
+      "duration_nights": 12,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 21000.0,
+          "original_price": null,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 39000.0,
+          "original_price": null,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/bcnmcm-12-v2?id-journey=EX20260527BCNMC1",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "a564e813dc5234717975f4a5b40843e99a7da184b11da342a1112b390200",
+      "voyage_name": "An Extended Journey of Splendid Coastlines & F1® Action",
+      "ship_name": "EXPLORA I",
+      "departure_port": "Barcelona",
+      "departure_date": "2026-05-27",
+      "return_date": "2026-06-09",
+      "duration_nights": 13,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 22500.0,
+          "original_price": null,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 40680.0,
+          "original_price": null,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/bcncvv-13-v2?id-journey=EX20260527BCNCV1",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "a516006c5a7164af3104014d67011e31af4b8d1846fea31928b93218a162",
+      "voyage_name": "An Extended Journey through Natural Beauty & Azure Escapes",
+      "ship_name": "EXPLORA II",
+      "departure_port": "Piraeus (Athens)",
+      "departure_date": "2026-06-01",
+      "return_date": "2026-06-15",
+      "duration_nights": 14,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 12240.0,
+          "original_price": 14400.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 16830.0,
+          "original_price": 19800.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/pirpir-14-v14?id-journey=EP20260601PIRPIR",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "77d6be6e8110230a477cf378de4c04d289a6d879f0e8e10a0e202509b2f3",
+      "voyage_name": "A Journey of Lush Landscapes & Golden Enchantment",
+      "ship_name": "EXPLORA II",
+      "departure_port": "Piraeus (Athens)",
+      "departure_date": "2026-06-01",
+      "return_date": "2026-06-08",
+      "duration_nights": 7,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 6850.0,
+          "original_price": null,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 8565.0,
+          "original_price": null,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/pirfsa-07-v6?id-journey=EP20260601PIRFSA",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "eff965ca279bd056418e153ebb8ea664da06f74af66f197c372bea28ffd1",
+      "voyage_name": "An Extended Journey to Mediterranean Icons and F1® Celebrations",
+      "ship_name": "EXPLORA I",
+      "departure_port": "Civitavecchia (Rome)",
+      "departure_date": "2026-06-02",
+      "return_date": "2026-06-15",
+      "duration_nights": 13,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 23000.0,
+          "original_price": null,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 44500.0,
+          "original_price": null,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/cvvbcn-13-v1?id-journey=EX20260602CVVBCN",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "fafe9eb5a3f294e03100e836626b3231e7289a447ee8e7481fd642866bad",
+      "voyage_name": "Monaco F1® Race Weekend, Reimagined",
+      "ship_name": "EXPLORA I",
+      "departure_port": "Civitavecchia (Rome)",
+      "departure_date": "2026-06-02",
+      "return_date": "2026-06-09",
+      "duration_nights": 7,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 17000.0,
+          "original_price": null,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 34000.0,
+          "original_price": null,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/cvvcvv-07-v1?id-journey=EX20260602CVVCVV",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "70609d2805ea2ec170c4df7325714df4adeab90a396b95227c98fa399a74",
+      "voyage_name": "Monaco F1® Race Weekend, Reimagined",
+      "ship_name": "EXPLORA I",
+      "departure_port": "Monte Carlo",
+      "departure_date": "2026-06-03",
+      "return_date": "2026-06-08",
+      "duration_nights": 5,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 14500.0,
+          "original_price": null,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 29000.0,
+          "original_price": null,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/mcmmcm-05-v1?id-journey=EX20260603MCMMCM",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "01ee7d74e05828411a536e80c6fa8a45a34eb38e218d6d8f0f24c3538014",
+      "voyage_name": "An Extended Journey to Mediterranean Elegance: From F1® Race Weekend to Calming Scenic Shores",
+      "ship_name": "EXPLORA I",
+      "departure_port": "Monte Carlo",
+      "departure_date": "2026-06-03",
+      "return_date": "2026-06-15",
+      "duration_nights": 12,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 21500.0,
+          "original_price": null,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 41500.0,
+          "original_price": null,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/mcmbcn-12-v2?id-journey=EX20260603MCMBCN",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "a2520903b1dda4e555046c09f64707825b47445a345e97d32a0cc72ad2d8",
+      "voyage_name": "An Extended Journey Between Quiet Coasts & Luminous Isles",
+      "ship_name": "EXPLORA II",
+      "departure_port": "Fusina (Venice)",
+      "departure_date": "2026-06-08",
+      "return_date": "2026-06-22",
+      "duration_nights": 14,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 10880.0,
+          "original_price": 14400.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 14960.0,
+          "original_price": 19800.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/fsapir-14-v13?id-journey=EP20260608FSAPI1",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "5e3bc460bd068c3b6e5770b911212ab9f7d392a3e62f5761350c87ee7c8c",
+      "voyage_name": "A Journey through Adriatic Charms & Aegean Wonders",
+      "ship_name": "EXPLORA II",
+      "departure_port": "Fusina (Venice)",
+      "departure_date": "2026-06-08",
+      "return_date": "2026-06-15",
+      "duration_nights": 7,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 5895.0,
+          "original_price": 6550.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 8840.0,
+          "original_price": 9825.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/fsapir-07-v16?id-journey=EP20260608FSAPIR",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "98cb71478dee6b5fce0c1e588c2538a0f6264a4667ab4ddcb3107906ac01",
+      "voyage_name": "An Extended Journey from Striking Coastlines to Island Serenity",
+      "ship_name": "EXPLORA I",
+      "departure_port": "Monte Carlo",
+      "departure_date": "2026-06-08",
+      "return_date": "2026-06-22",
+      "duration_nights": 14,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 11560.0,
+          "original_price": 14350.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 20185.0,
+          "original_price": 25115.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/mcmbcn-14-v1?id-journey=EX20260608MCMBC1",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "1edf0b228047bad4c4afa22002b9114c30b70b35cc599b0203f45cf56470",
+      "voyage_name": "A Journey of Historic Splendour & Stunning Landscapes",
+      "ship_name": "EXPLORA I",
+      "departure_port": "Monte Carlo",
+      "departure_date": "2026-06-08",
+      "return_date": "2026-06-15",
+      "duration_nights": 7,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 5650.0,
+          "original_price": 6650.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 9890.0,
+          "original_price": 11640.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/mcmbcn-07-v3?id-journey=EX20260608MCMBCN",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "57c2867fc5cbd1381c5d531c66940f4a284b8b364e455665f82449afdc02",
+      "voyage_name": "A Journey From the Eternal City to Catalan Shores",
+      "ship_name": "EXPLORA I",
+      "departure_port": "Civitavecchia (Rome)",
+      "departure_date": "2026-06-09",
+      "return_date": "2026-06-15",
+      "duration_nights": 6,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 5130.0,
+          "original_price": 5700.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 8975.0,
+          "original_price": 9975.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/cvvbcn-06-v1?id-journey=EX20260609CVVBCN",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "166ce7c82c9b63a4870ac3352c5fa09299332876d78dfab242bf12d039f5",
+      "voyage_name": "An Extended Journey through Sparkling Coasts & Serene Beauty",
+      "ship_name": "EXPLORA I",
+      "departure_port": "Barcelona",
+      "departure_date": "2026-06-15",
+      "return_date": "2026-06-29",
+      "duration_nights": 14,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 13185.0,
+          "original_price": 15450.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 21420.0,
+          "original_price": 25150.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/bcncvv-14-v1?id-journey=EX20260615BCNCVV",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "a4f1e8a872cbb72f4b9194d429cca4bd745a7a31a414b5e5e526c3252e75",
+      "voyage_name": "A Journey of Island Wonders & Serene Riviera Exploration",
+      "ship_name": "EXPLORA I",
+      "departure_port": "Barcelona",
+      "departure_date": "2026-06-15",
+      "return_date": "2026-06-22",
+      "duration_nights": 7,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 6300.0,
+          "original_price": 7000.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 11025.0,
+          "original_price": 12250.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/bcnbcn-07-v4?id-journey=EX20260615BCNBCN",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "eb7421e661a91d1511128be5e8c9b3bf23758be5520cbe63a15226a74e1e",
+      "voyage_name": "A Journey Through Cycladic Charm & Ionian Shores",
+      "ship_name": "EXPLORA II",
+      "departure_port": "Piraeus (Athens)",
+      "departure_date": "2026-06-15",
+      "return_date": "2026-06-22",
+      "duration_nights": 7,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 5240.0,
+          "original_price": 6550.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 6550.0,
+          "original_price": 8190.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/pirpir-07-v12?id-journey=EP20260615PIRPIR",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "757b293fd5dc602a1ab4a650546b27f99a887c51d5fedb5be9e39dd3194d",
+      "voyage_name": "An Extended Journey of Island Light & Adriatic Horizons",
+      "ship_name": "EXPLORA II",
+      "departure_port": "Piraeus (Athens)",
+      "departure_date": "2026-06-15",
+      "return_date": "2026-06-29",
+      "duration_nights": 14,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 11200.0,
+          "original_price": 14800.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 14000.0,
+          "original_price": 18500.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/pirfsa-14-v8?id-journey=EP20260615PIRFSA",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "bf65a0c5a2296eedeefd59d7a0e39c72488c25e9c43943f01c17de35d440",
+      "voyage_name": "A Journey of Lush Landscapes & Golden Enchantment",
+      "ship_name": "EXPLORA II",
+      "departure_port": "Piraeus (Athens)",
+      "departure_date": "2026-06-22",
+      "return_date": "2026-06-29",
+      "duration_nights": 7,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 6290.0,
+          "original_price": 7400.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 7860.0,
+          "original_price": 9250.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/pirfsa-07-v6?id-journey=EP20260622PIRFSA",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "6ba060e31ff8c1527ea2c05c75472435d8e306a9d2e6be779a22e592a979",
+      "voyage_name": "A Journey through the Picturesque Mediterranean & Historic Beauty of the Sparkling Riviera",
+      "ship_name": "EXPLORA I",
+      "departure_port": "Barcelona",
+      "departure_date": "2026-06-22",
+      "return_date": "2026-06-29",
+      "duration_nights": 7,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 6315.0,
+          "original_price": 6650.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 9470.0,
+          "original_price": 9975.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/bcncvv-07-v8?id-journey=EX20260622BCNCVV",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "8c93e5562126dec81e72f4cf02c2b8f8f2d88e58b28c4e90285fb781bbff",
+      "voyage_name": "An Extended Journey of Historic Discovery & Bewitching Scenery",
+      "ship_name": "EXPLORA I",
+      "departure_port": "Barcelona",
+      "departure_date": "2026-06-22",
+      "return_date": "2026-07-06",
+      "duration_nights": 14,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 12155.0,
+          "original_price": 15100.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 18190.0,
+          "original_price": 22650.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/bcnbcn-14-v10?id-journey=EX20260622BCNBCN",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "09b8af609172c27b851081da9d5e949a74efda23ed6816d032b80f5fadf3",
+      "voyage_name": "A Journey of Shimmering Shores & Timeless Mediterranean Treasures",
+      "ship_name": "EXPLORA I",
+      "departure_port": "Civitavecchia (Rome)",
+      "departure_date": "2026-06-29",
+      "return_date": "2026-07-06",
+      "duration_nights": 7,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 6245.0,
+          "original_price": 7350.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 9365.0,
+          "original_price": 11025.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/cvvbcn-07-v5?id-journey=EX20260629CVVBCN",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "ba06b2d730bdb4c3e3398b607f986badad06160453f1c9a2f7fab9489389",
+      "voyage_name": "An Extended Journey Through Mediterranean Grandeur",
+      "ship_name": "EXPLORA I",
+      "departure_port": "Civitavecchia (Rome)",
+      "departure_date": "2026-06-29",
+      "return_date": "2026-07-13",
+      "duration_nights": 14,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 11475.0,
+          "original_price": 14250.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 18570.0,
+          "original_price": 23100.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/cvvcvv-14-v16?id-journey=EX20260629CVVCVV",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "27ce02d48a567ad8cf0e0768d9a42ec12ee9b3c1614cb4b490c5d559ed27",
+      "voyage_name": "An Extended Journey of Antique Treasures, Volcanic Views & Tranquil Shores",
+      "ship_name": "EXPLORA I",
+      "departure_port": "Barcelona",
+      "departure_date": "2026-07-06",
+      "return_date": "2026-07-20",
+      "duration_nights": 14,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 11790.0,
+          "original_price": 13800.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 19125.0,
+          "original_price": 22425.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/bcnbcn-14-v18?id-journey=EX20260706BCNBCN",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "fc0aac623b70e7c128a07f5b9964b3556babe51f62aa4d841d7527671f50",
+      "voyage_name": "A Journey Through Greek Isles & Hidden Shores",
+      "ship_name": "EXPLORA II",
+      "departure_port": "Piraeus (Athens)",
+      "departure_date": "2026-07-06",
+      "return_date": "2026-07-13",
+      "duration_nights": 7,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 5225.0,
+          "original_price": 6150.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 6530.0,
+          "original_price": 7690.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/pirpir-07-v13?id-journey=EP20260706PIRPIR",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "af027bfc18ed297bf3e5cd29038a5391a697e8e208d109e00053ba0d554a",
+      "voyage_name": "An Extended Journey of Island Rhythms & Adriatic Echoes",
+      "ship_name": "EXPLORA II",
+      "departure_port": "Piraeus (Athens)",
+      "departure_date": "2026-07-06",
+      "return_date": "2026-07-20",
+      "duration_nights": 14,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 11560.0,
+          "original_price": 13600.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 14450.0,
+          "original_price": 17000.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/pirfsa-14-v11?id-journey=EP20260706PIRFSA",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "76f47ed2dcbbdabf5fe888ebe75a4ac6f1f6f381c67512bd780415b798b1",
+      "voyage_name": "A Journey Across Mediterranean Masterpieces",
+      "ship_name": "EXPLORA I",
+      "departure_port": "Barcelona",
+      "departure_date": "2026-07-06",
+      "return_date": "2026-07-13",
+      "duration_nights": 7,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 5625.0,
+          "original_price": 6250.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 9845.0,
+          "original_price": 10940.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/bcncvv-07-v35?id-journey=EX20260706BCNCVV",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "3218fbc42a6141d04829ea55acf53dd5f940c3e82dd9571756a58f17fdca",
+      "voyage_name": "An Extended Journey of Marble Cities & Sapphire Seas",
+      "ship_name": "EXPLORA II",
+      "departure_port": "Piraeus (Athens)",
+      "departure_date": "2026-07-13",
+      "return_date": "2026-07-27",
+      "duration_nights": 14,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 12255.0,
+          "original_price": 13600.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 16815.0,
+          "original_price": 18700.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/pirpir-14-v13?id-journey=EP20260713PIRPIR",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "011f1cbbe6a7b6024f17f9b5bf94de12918101231e3d818b12afb87bdc55",
+      "voyage_name": "A Journey of Lush Landscapes & Golden Enchantment",
+      "ship_name": "EXPLORA II",
+      "departure_port": "Piraeus (Athens)",
+      "departure_date": "2026-07-13",
+      "return_date": "2026-07-20",
+      "duration_nights": 7,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 5840.0,
+          "original_price": 6150.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 7300.0,
+          "original_price": 7690.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/pirfsa-07-v6?id-journey=EP20260713PIRFSA",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "d6483cb78ccc263a867243b4b80c605c1287ef07f44aacb54c225c276d8c",
+      "voyage_name": "An Extended Journey of Rocky Scenery, Diverse Cultures & Captivating Cities",
+      "ship_name": "EXPLORA I",
+      "departure_port": "Civitavecchia (Rome)",
+      "departure_date": "2026-07-13",
+      "return_date": "2026-07-27",
+      "duration_nights": 14,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 11790.0,
+          "original_price": 13800.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 16155.0,
+          "original_price": 18975.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/cvvcvv-14-v13?id-journey=EX20260713CVVCVV",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "95fa13ec050c754b2ea967590a439aed5261208be8ec57b77842f20984e8",
+      "voyage_name": "A Journey of Antique Treasures to Sumptuous Catalan",
+      "ship_name": "EXPLORA I",
+      "departure_port": "Civitavecchia (Rome)",
+      "departure_date": "2026-07-13",
+      "return_date": "2026-07-20",
+      "duration_nights": 7,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 6555.0,
+          "original_price": 6900.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 9830.0,
+          "original_price": 10350.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/cvvbcn-07-v7?id-journey=EX20260713CVVBCN",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "fb27e30857ab674bc507ffebdfc675f965658563f2909e8fcaeda0f1ce32",
+      "voyage_name": "An Extended Journey of Historic Discovery & Bewitching Scenery",
+      "ship_name": "EXPLORA I",
+      "departure_port": "Barcelona",
+      "departure_date": "2026-07-20",
+      "return_date": "2026-08-03",
+      "duration_nights": 14,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 11790.0,
+          "original_price": 13800.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 14670.0,
+          "original_price": 17250.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/bcnbcn-14-v10?id-journey=EX20260720BCNBCN",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "15decf953f6036e09b1cec58a474f1d77b82a29c093a0b04056067faac00",
+      "voyage_name": "An Extended Journey of Sunlit Shores & Quiet Seas",
+      "ship_name": "EXPLORA II",
+      "departure_port": "Fusina (Venice)",
+      "departure_date": "2026-07-20",
+      "return_date": "2026-08-03",
+      "duration_nights": 14,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 10965.0,
+          "original_price": 13600.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 15045.0,
+          "original_price": 18700.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/fsapir-14-v14?id-journey=EP20260720FSAPI1",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "1432a9ad195c5cc06f3d551657086f230dae9e9c8b735281a1a2b55d50de",
+      "voyage_name": "A Journey through the Picturesque Mediterranean & Historic Beauty of the Sparkling Riviera",
+      "ship_name": "EXPLORA I",
+      "departure_port": "Barcelona",
+      "departure_date": "2026-07-20",
+      "return_date": "2026-07-27",
+      "duration_nights": 7,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 5625.0,
+          "original_price": 6250.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 7030.0,
+          "original_price": 7815.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/bcncvv-07-v8?id-journey=EX20260720BCNCVV",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "95fd028563db303822a23269eba26df322d49cb4a1d2305279b82d0ecfd8",
+      "voyage_name": "A Journey to Adriatic Wonders & Ancient Secrets",
+      "ship_name": "EXPLORA II",
+      "departure_port": "Fusina (Venice)",
+      "departure_date": "2026-07-20",
+      "return_date": "2026-07-27",
+      "duration_nights": 7,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 6150.0,
+          "original_price": null,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 9225.0,
+          "original_price": null,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/fsapir-07-v17?id-journey=EP20260720FSAPIR",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "ba20cb3f504542754e2c191b88e744d7504ae9b77249df90923335857780",
+      "voyage_name": "A Mediterranean Prelude to EXPLORA III with Jannik Sinner",
+      "ship_name": "EXPLORA III",
+      "departure_port": "Genoa",
+      "departure_date": "2026-07-24",
+      "return_date": "2026-07-29",
+      "duration_nights": 5,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 8150.0,
+          "original_price": null,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 16300.0,
+          "original_price": null,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/goacvv-05-v1?id-journey=EL20260724GOACVV",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "d05c59c2f43b76c94a1b9bad2dcefdd05fed1d59668e6696223f9039bb35",
+      "voyage_name": "An Extended Journey of Spectacular Serenity, Mountain Views & Mythical Spirit",
+      "ship_name": "EXPLORA I",
+      "departure_port": "Civitavecchia (Rome)",
+      "departure_date": "2026-07-27",
+      "return_date": "2026-08-10",
+      "duration_nights": 14,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 12060.0,
+          "original_price": 14200.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 15030.0,
+          "original_price": 17750.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/cvvcvv-14-v11?id-journey=EX20260727CVVCVV",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "0c2fe235595983b8ed9fdbe7a893b671b3af8b9b5bda5b1a874d79303843",
+      "voyage_name": "A Journey Through Ionian Shores & Cycladic Beauty",
+      "ship_name": "EXPLORA II",
+      "departure_port": "Piraeus (Athens)",
+      "departure_date": "2026-07-27",
+      "return_date": "2026-08-03",
+      "duration_nights": 7,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 5225.0,
+          "original_price": 6150.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 6530.0,
+          "original_price": 7690.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/pirpir-07-v14?id-journey=EP20260727PIRPIR",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "a679d2acfb0b731b8e506eb39d714a7d237b88b9f01dd3f7bf65c7d510b8",
+      "voyage_name": "An Extended Journey of Hidden Greece & Adriatic Edges",
+      "ship_name": "EXPLORA II",
+      "departure_port": "Piraeus (Athens)",
+      "departure_date": "2026-07-27",
+      "return_date": "2026-08-10",
+      "duration_nights": 14,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 10370.0,
+          "original_price": 12900.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 12920.0,
+          "original_price": 16130.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/pirfsa-14-v14?id-journey=EP20260727PIRFSA",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "86493bfe97014f8d8eb40392803dc4e9851d75f1461ac9570d25e6e91d75",
+      "voyage_name": "A Journey of Shimmering Shores & Timeless Mediterranean Treasures",
+      "ship_name": "EXPLORA I",
+      "departure_port": "Civitavecchia (Rome)",
+      "departure_date": "2026-07-27",
+      "return_date": "2026-08-03",
+      "duration_nights": 7,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 5625.0,
+          "original_price": 6250.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 7030.0,
+          "original_price": 7815.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/cvvbcn-07-v5?id-journey=EX20260727CVVBCN",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "4213e4728c50f9022d60c61c3453d1f139645d677a64a36db75138bf6dd9",
+      "voyage_name": "A Journey through Mediterranean Beauty, Artistic Spirit & Eternal Charms",
+      "ship_name": "EXPLORA I",
+      "departure_port": "Barcelona",
+      "departure_date": "2026-08-03",
+      "return_date": "2026-08-10",
+      "duration_nights": 7,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 5935.0,
+          "original_price": 6250.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 7420.0,
+          "original_price": 7815.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/bcncvv-07-v11?id-journey=EX20260803BCNCVV",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "dfc9c830901f7fa878789dfe6ffb63418c6d1f7b7475028678a46d328712",
+      "voyage_name": "An Extended Journey from Heritage Havens to Architectural Splendour",
+      "ship_name": "EXPLORA II",
+      "departure_port": "Piraeus (Athens)",
+      "departure_date": "2026-08-03",
+      "return_date": "2026-08-17",
+      "duration_nights": 14,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 10370.0,
+          "original_price": 12900.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 12920.0,
+          "original_price": 16130.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/pirpir-14-v12?id-journey=EP20260803PIRPIR",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "6e24c06a749e32524003d21e76758dc836b52b1485855f55d3cd3ec35189",
+      "voyage_name": "A Journey of Lively Beach Towns & Timeless Lyrical Charm",
+      "ship_name": "EXPLORA III",
+      "departure_port": "Barcelona",
+      "departure_date": "2026-08-03",
+      "return_date": "2026-08-10",
+      "duration_nights": 7,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 6345.0,
+          "original_price": 7050.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 7930.0,
+          "original_price": 8815.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/bcnlis-07-v2?id-journey=EL20260803BCNLIS",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "f74874fc36b825c176a141980beff7786f0268c004e2bc7836717e6cd21f",
+      "voyage_name": "An Extended Journey from Iberian Rhythms to Cultural Crossings",
+      "ship_name": "EXPLORA III",
+      "departure_port": "Barcelona",
+      "departure_date": "2026-08-03",
+      "return_date": "2026-08-17",
+      "duration_nights": 14,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 13230.0,
+          "original_price": 15500.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 18135.0,
+          "original_price": 21315.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/bcnsou-14-v2?id-journey=EL20260803BCNSOU",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "a4dd399b91c97c0ba7400772a9d94f631b3bc76dd46385e52a51e1e5f06c",
+      "voyage_name": "An Extended Journey from Cultural Gems to Riviera Magic & Balmy Beaches",
+      "ship_name": "EXPLORA I",
+      "departure_port": "Barcelona",
+      "departure_date": "2026-08-03",
+      "return_date": "2026-08-17",
+      "duration_nights": 14,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 11390.0,
+          "original_price": 14200.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 14195.0,
+          "original_price": 17750.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/bcnbcn-14-v12?id-journey=EX20260803BCNBCN",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "519bf0e7d27b15cf315f6bd5f7b083183861ef0d8dc80a3c2a4f6ee8f988",
+      "voyage_name": "A Journey through Cycladic Charms & Culture-infused Coastal Allure",
+      "ship_name": "EXPLORA II",
+      "departure_port": "Piraeus (Athens)",
+      "departure_date": "2026-08-03",
+      "return_date": "2026-08-10",
+      "duration_nights": 7,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 5535.0,
+          "original_price": 6150.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 6920.0,
+          "original_price": 7690.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/pirfsa-07-v5?id-journey=EP20260803PIRFSA",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "6591d3dd254b8d5a8f182e5441e1f7881f0f85b6e4b13da887c384d77d51",
+      "voyage_name": "An Extended Journey into Riviera Romance & Italian Marvels",
+      "ship_name": "EXPLORA I",
+      "departure_port": "Civitavecchia (Rome)",
+      "departure_date": "2026-08-10",
+      "return_date": "2026-08-24",
+      "duration_nights": 14,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 11135.0,
+          "original_price": 13800.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 13855.0,
+          "original_price": 17250.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/cvvcvv-14-v12?id-journey=EX20260810CVVCVV",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "a248c2e20b11b16400c98bece40cdc1668e87b62ab2ad4650fb8845f8c08",
+      "voyage_name": "A Journey from Venetian Elegance to Stunning Nature",
+      "ship_name": "EXPLORA II",
+      "departure_port": "Fusina (Venice)",
+      "departure_date": "2026-08-10",
+      "return_date": "2026-08-17",
+      "duration_nights": 7,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 5225.0,
+          "original_price": 6150.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 6530.0,
+          "original_price": 7690.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/fsapir-07-v15?id-journey=EP20260810FSAPIR",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "5815f478222fa9ba5b618289ce40fc88960d71513c6aba9bd7a628523827",
+      "voyage_name": "An Extended Journey Between Kefalonia’s Calm & Mykonos’ Energy",
+      "ship_name": "EXPLORA II",
+      "departure_port": "Fusina (Venice)",
+      "departure_date": "2026-08-10",
+      "return_date": "2026-08-24",
+      "duration_nights": 14,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 10320.0,
+          "original_price": 12900.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 12900.0,
+          "original_price": 16130.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/fsapir-14-v10?id-journey=EP20260810FSAPI1",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "3fef057b9565099f02adab31a98425698424f71fc531104518732e04426b",
+      "voyage_name": "A Journey of Treasured Secrets & Chic Promenades",
+      "ship_name": "EXPLORA I",
+      "departure_port": "Civitavecchia (Rome)",
+      "departure_date": "2026-08-10",
+      "return_date": "2026-08-17",
+      "duration_nights": 7,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 5310.0,
+          "original_price": 6250.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 6640.0,
+          "original_price": 7815.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/cvvbcn-07-v6?id-journey=EX20260810CVVBCN",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "87f8aef30b1610826f9c7e7cebf5e4e7c0081dd2041581c05c7031bb5875",
+      "voyage_name": "A Grand Journey from Vineyard Valleys to Fjord-Kissed Peaks",
+      "ship_name": "EXPLORA III",
+      "departure_port": "Lisbon",
+      "departure_date": "2026-08-10",
+      "return_date": "2026-08-25",
+      "duration_nights": 15,
+      "region": "Grand Journeys",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 16200.0,
+          "original_price": 17100.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 24250.0,
+          "original_price": 25650.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/tra/journeys/liscph-15-v2?id-journey=EL20260810LISCPH",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "953a7fae9b49ed8b42e4844b3401b3309dbdd2bc02ae20b328a6e469445b",
+      "voyage_name": "A Journey of Iberian Splendour & Atlantic Discoveries",
+      "ship_name": "EXPLORA III",
+      "departure_port": "Lisbon",
+      "departure_date": "2026-08-10",
+      "return_date": "2026-08-17",
+      "duration_nights": 7,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 7050.0,
+          "original_price": null,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 10575.0,
+          "original_price": null,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/lissou-07-v2?id-journey=EL20260810LISSOU",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "d757a95ac92cd88a5802981db7c9d9332644392161b25611efab310095f8",
+      "voyage_name": "An Extended Journey of Hidden Greece & Adriatic Edges",
+      "ship_name": "EXPLORA II",
+      "departure_port": "Piraeus (Athens)",
+      "departure_date": "2026-08-17",
+      "return_date": "2026-08-31",
+      "duration_nights": 14,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 10320.0,
+          "original_price": 13600.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 12880.0,
+          "original_price": 17000.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/pirfsa-14-v14?id-journey=EP20260817PIRFSA",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "779edaf88c726244058f24151462a6f91b2d66f17979ed8af7487d9be4c0",
+      "voyage_name": "A Journey Through Ionian Shores & Cycladic Beauty",
+      "ship_name": "EXPLORA II",
+      "departure_port": "Piraeus (Athens)",
+      "departure_date": "2026-08-17",
+      "return_date": "2026-08-24",
+      "duration_nights": 7,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 4920.0,
+          "original_price": 6150.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 6150.0,
+          "original_price": 7690.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/pirpir-07-v14?id-journey=EP20260817PIRPIR",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "39cc195c247b66e9e38a671d5029cb853d141523be2f8d94691574baaf4a",
+      "voyage_name": "An Extended Journey from Fjordlands to Storied Cities",
+      "ship_name": "EXPLORA III",
+      "departure_port": "Southampton",
+      "departure_date": "2026-08-17",
+      "return_date": "2026-09-02",
+      "duration_nights": 16,
+      "region": "Northern Europe, Iceland & Greenland",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 18700.0,
+          "original_price": null,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 28050.0,
+          "original_price": null,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/ice/journeys/soucph-16-v2?id-journey=EL20260817SOUCP1",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "1071b06237c837119ec6a09378d8528f4fed0f30fe3ced0c44c57b184348",
+      "voyage_name": "An Extended Journey from Northern Spirit to Cultural Riches & Artistic Marvels",
+      "ship_name": "EXPLORA III",
+      "departure_port": "Southampton",
+      "departure_date": "2026-08-17",
+      "return_date": "2026-09-09",
+      "duration_nights": 23,
+      "region": "Northern Europe, Iceland & Greenland",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 23805.0,
+          "original_price": 27900.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 33885.0,
+          "original_price": 39800.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/ice/journeys/sousou-23-v2?id-journey=EL20260817SOUSOU",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "15c49fba1fd63bb554f372b76274c98684f12a831bc57fb3eccb69458bb7",
+      "voyage_name": "A Journey to Stunning Fjords, Colourful Coastlines & Nordic Delights",
+      "ship_name": "EXPLORA III",
+      "departure_port": "Southampton",
+      "departure_date": "2026-08-17",
+      "return_date": "2026-08-25",
+      "duration_nights": 8,
+      "region": "Northern Europe, Iceland & Greenland",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 8500.0,
+          "original_price": null,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 12750.0,
+          "original_price": null,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/ice/journeys/soucph-08-v5?id-journey=EL20260817SOUCPH",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "2e65fc882f39ad128d9e05f9a40d227a3200e7141164b8b6a38fbe2a87d1",
+      "voyage_name": "An Extended Journey of Historic Discovery & Bewitching Scenery",
+      "ship_name": "EXPLORA I",
+      "departure_port": "Barcelona",
+      "departure_date": "2026-08-17",
+      "return_date": "2026-08-31",
+      "duration_nights": 14,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 10720.0,
+          "original_price": 14200.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 13360.0,
+          "original_price": 17750.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/bcnbcn-14-v10?id-journey=EX20260817BCNBCN",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "1ad9a58fc63075f6d97a776e085ddf2e3d88cfc63646b4d1cb921944d8b4",
+      "voyage_name": "A Journey through the Picturesque Mediterranean & Historic Beauty of the Sparkling Riviera",
+      "ship_name": "EXPLORA I",
+      "departure_port": "Barcelona",
+      "departure_date": "2026-08-17",
+      "return_date": "2026-08-24",
+      "duration_nights": 7,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 5625.0,
+          "original_price": 6250.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 7030.0,
+          "original_price": 7815.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/bcncvv-07-v8?id-journey=EX20260817BCNCVV",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "9c32fe0cff0d9151caf7b116c36a5b899bc6571be65752f6847a6be90787",
+      "voyage_name": "A Journey of Shimmering Shores & Timeless Mediterranean Treasures",
+      "ship_name": "EXPLORA I",
+      "departure_port": "Civitavecchia (Rome)",
+      "departure_date": "2026-08-24",
+      "return_date": "2026-08-31",
+      "duration_nights": 7,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 5000.0,
+          "original_price": 6250.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 6250.0,
+          "original_price": 7815.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/cvvbcn-07-v5?id-journey=EX20260824CVVBCN",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    },
+    {
+      "voyage_id": "14a50d884e3f1d9e78ad4ba4e7d8beb527cb3329f43bd999214c9714593a",
+      "voyage_name": "An Extended Journey from Heritage Havens to Architectural Splendour",
+      "ship_name": "EXPLORA II",
+      "departure_port": "Piraeus (Athens)",
+      "departure_date": "2026-08-24",
+      "return_date": "2026-09-07",
+      "duration_nights": 14,
+      "region": "Mediterranean & Western Europe",
+      "cabin_categories": [
+        {
+          "category_code": "DOCC",
+          "category_name": "Double Occupancy",
+          "price_per_person": 10965.0,
+          "original_price": 13600.0,
+          "currency": "USD",
+          "availability": "available"
+        },
+        {
+          "category_code": "SING",
+          "category_name": "Single Occupancy",
+          "price_per_person": 15045.0,
+          "original_price": 18700.0,
+          "currency": "USD",
+          "availability": "available"
+        }
+      ],
+      "voyage_url": "https://explorajourneys.com/int/en/destinations-globe/med/journeys/pirpir-14-v12?id-journey=EP20260824PIRPIR",
+      "scrape_date": "2026-04-01",
+      "scrape_timestamp": "2026-04-01T06:36:20.248100+00:00",
+      "cruise_line": "explora_journeys"
+    }
+  ]
+}
