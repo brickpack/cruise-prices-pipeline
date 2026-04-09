@@ -1,5 +1,15 @@
 {
   "dates": {
+    "2026-04-09": {
+      "explora_journeys": {
+        "record_count": 103,
+        "file": "2026-04-09/explora_journeys.json"
+      },
+      "oceania_cruises": {
+        "record_count": 576,
+        "file": "2026-04-09/oceania_cruises.json"
+      }
+    },
     "2026-04-08": {
       "explora_journeys": {
         "record_count": 102,
@@ -362,9 +372,9 @@
     },
     "2026-03-03": {}
   },
-  "last_updated": "2026-04-08T06:45:10.914839+00:00",
+  "last_updated": "2026-04-09T06:46:02.630662+00:00",
   "cruise_lines": [
-    "oceania_cruises",
-    "explora_journeys"
+    "explora_journeys",
+    "oceania_cruises"
   ]
 }
