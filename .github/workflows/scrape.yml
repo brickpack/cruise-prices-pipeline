@@ -1,79 +1,79 @@
-name: Daily Cruise Price Scrape
+# name: Daily Cruise Price Scrape
 
-on:
-  schedule:
-    # 6 AM UTC daily
-    - cron: '0 6 * * *'
-  # Allow manual trigger from the Actions tab for testing
-  workflow_dispatch:
+# on:
+#   schedule:
+#     # 6 AM UTC daily
+#     - cron: '0 6 * * *'
+#   # Allow manual trigger from the Actions tab for testing
+#   workflow_dispatch:
 
-# Required for the git push step to commit data files back to the repo
-permissions:
-  contents: write
+# # Required for the git push step to commit data files back to the repo
+# permissions:
+#   contents: write
 
-jobs:
-  scrape:
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
+# jobs:
+#   scrape:
+#     runs-on: ubuntu-latest
+#     timeout-minutes: 30
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v4
 
-      - name: Set up Python 3.11
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-          cache: 'pip'
-          cache-dependency-path: scrapers/requirements.txt
+#       - name: Set up Python 3.11
+#         uses: actions/setup-python@v5
+#         with:
+#           python-version: '3.11'
+#           cache: 'pip'
+#           cache-dependency-path: scrapers/requirements.txt
 
-      - name: Install Python dependencies
-        run: pip install -r scrapers/requirements.txt
+#       - name: Install Python dependencies
+#         run: pip install -r scrapers/requirements.txt
 
-      # Install Chromium unconditionally — both scrapers use Playwright
-      - name: Install Playwright + Chromium
-        run: playwright install chromium --with-deps
+#       # Install Chromium unconditionally — both scrapers use Playwright
+#       - name: Install Playwright + Chromium
+#         run: playwright install chromium --with-deps
 
-      - name: Run scrapers
-        id: scrape
-        run: python scrapers/run_all.py
-        # Don't fail the workflow immediately — let the commit step run
-        # so any partial data is preserved
-        continue-on-error: true
+#       - name: Run scrapers
+#         id: scrape
+#         run: python scrapers/run_all.py
+#         # Don't fail the workflow immediately — let the commit step run
+#         # so any partial data is preserved
+#         continue-on-error: true
 
-      - name: Send price alert emails
-        # Only runs if RESEND_API_KEY secret is configured
-        if: env.RESEND_API_KEY != ''
-        run: python scrapers/send_alerts.py
-        continue-on-error: true  # never block the data commit if alerts fail
-        env:
-          RESEND_API_KEY:  ${{ secrets.RESEND_API_KEY }}
-          RESEND_FROM:     ${{ secrets.RESEND_FROM || 'Cruise Price Alerts <alerts@cruise-prices.dev>' }}
-          SITE_URL:        "https://brickpack.github.io/cruise-prices-pipeline"
-          WORKER_URL:      ${{ secrets.WORKER_URL }}
+#       - name: Send price alert emails
+#         # Only runs if RESEND_API_KEY secret is configured
+#         if: env.RESEND_API_KEY != ''
+#         run: python scrapers/send_alerts.py
+#         continue-on-error: true  # never block the data commit if alerts fail
+#         env:
+#           RESEND_API_KEY:  ${{ secrets.RESEND_API_KEY }}
+#           RESEND_FROM:     ${{ secrets.RESEND_FROM || 'Cruise Price Alerts <alerts@cruise-prices.dev>' }}
+#           SITE_URL:        "https://brickpack.github.io/cruise-prices-pipeline"
+#           WORKER_URL:      ${{ secrets.WORKER_URL }}
 
-      - name: Copy data files for GitHub Pages
-        run: |
-          mkdir -p docs/data
-          cp data/latest.json docs/data/latest.json
-          cp data/manifest.json docs/data/manifest.json
+#       - name: Copy data files for GitHub Pages
+#         run: |
+#           mkdir -p docs/data
+#           cp data/latest.json docs/data/latest.json
+#           cp data/manifest.json docs/data/manifest.json
 
-      - name: Commit and push data files
-        run: |
-          git config user.name "cruise-price-bot"
-          git config user.email "bot@users.noreply.github.com"
-          git add data/ docs/data/
-          # Also commit alerts.json if last_notified timestamps were updated
-          git add data/alerts.json 2>/dev/null || true
-          # Only commit if there are staged changes
-          git diff --staged --quiet || git commit -m "data: scrape $(date -u +%Y-%m-%d)"
-          git push
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#       - name: Commit and push data files
+#         run: |
+#           git config user.name "cruise-price-bot"
+#           git config user.email "bot@users.noreply.github.com"
+#           git add data/ docs/data/
+#           # Also commit alerts.json if last_notified timestamps were updated
+#           git add data/alerts.json 2>/dev/null || true
+#           # Only commit if there are staged changes
+#           git diff --staged --quiet || git commit -m "data: scrape $(date -u +%Y-%m-%d)"
+#           git push
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # Fail the workflow if the scraper step failed (after data is committed)
-      - name: Check scraper result
-        if: steps.scrape.outcome == 'failure'
-        run: |
-          echo "One or more scrapers failed. Check logs above for details."
-          exit 1
+#       # Fail the workflow if the scraper step failed (after data is committed)
+#       - name: Check scraper result
+#         if: steps.scrape.outcome == 'failure'
+#         run: |
+#           echo "One or more scrapers failed. Check logs above for details."
+#           exit 1
