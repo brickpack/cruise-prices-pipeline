@@ -41,6 +41,16 @@ jobs:
         # so any partial data is preserved
         continue-on-error: true
 
+      - name: Upload Oceania debug artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: oceania-debug
+          path: |
+            /tmp/oceania_debug.png
+            /tmp/oceania_debug.html
+          if-no-files-found: ignore
+
       - name: Send price alert emails
         # Only runs if RESEND_API_KEY secret is configured
         if: env.RESEND_API_KEY != ''
