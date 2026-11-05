@@ -45,6 +45,14 @@ DEBUG_MODE = os.getenv("OCEANIA_DEBUG", "").lower() in ("1", "true", "yes")
 CRAWL_DELAY_SECONDS = 10.0
 
 
+def _api_url(page_num: int, page_size: int = 10) -> str:
+    return (
+        f"{CRUISE_API_BASE}"
+        "?filters=duration%7Ctime_frame%7Cnot:port%7Cport%7Cship%7Cmarketing_region"
+        f"&sort=featured:desc&page={page_num}&pageSize={page_size}"
+    )
+
+
 class OceaniaCruisesScraper(BaseScraper):
     cruise_line = "oceania_cruises"
     request_delay = CRAWL_DELAY_SECONDS
@@ -82,14 +90,31 @@ class OceaniaCruisesScraper(BaseScraper):
         page.on("response", capture_cruise_api)
 
         logger.info("Navigating to %s", LISTING_URL)
-        await page.goto(LISTING_URL, wait_until="domcontentloaded", timeout=60_000)
+        resp = await page.goto(LISTING_URL, wait_until="domcontentloaded", timeout=60_000)
+        logger.info("Oceania listing HTTP status: %s", resp.status if resp else None)
         # Wait for Angular to init and fire the API call (12s to be safe)
         await page.wait_for_timeout(12_000)
+
+        if not api_responses:
+            # Page may be waiting on a cookie banner or lazy-loaded; nudge it
+            await self._dismiss_banners(page)
+            await page.mouse.wheel(0, 1500)
+            await page.wait_for_timeout(8_000)
+
+        if not api_responses:
+            # Fall back to calling the API directly from the page context
+            # (shares cookies/session) in case the page no longer triggers it.
+            logger.warning("No API response intercepted; trying direct in-page API fetch")
+            body = await self._fetch_api_in_page(page, 1)
+            if body and body.get("results"):
+                api_responses.append({"url": _api_url(1), "body": body})
+                first_request_url = _api_url(1)
 
         page.remove_listener("response", capture_cruise_api)
         logger.info("Captured %d Oceania API responses on initial load", len(api_responses))
 
         if not api_responses:
+            await self._log_diagnostics(page)
             logger.warning("No Oceania API responses captured. Attempting DOM fallback.")
             dom_records = await self._dom_fallback(page)
             return dom_records
@@ -213,6 +238,54 @@ class OceaniaCruisesScraper(BaseScraper):
             "cabin_categories": cabin_categories,
             "voyage_url": voyage_url or LISTING_URL,
         }
+
+    # ------------------------------------------------------------------
+    # Diagnostics / resilience helpers
+    # ------------------------------------------------------------------
+
+    async def _fetch_api_in_page(self, page: Page, page_num: int) -> dict | None:
+        try:
+            result = await page.evaluate(
+                """async (url) => {
+                    try {
+                        const r = await fetch(url, {headers: {'Accept': 'application/json'}});
+                        const text = await r.text();
+                        if (!r.ok) return {error: r.status, snippet: text.slice(0, 200)};
+                        return JSON.parse(text);
+                    } catch (e) { return {error: String(e)}; }
+                }""",
+                _api_url(page_num),
+            )
+        except Exception as exc:
+            logger.warning("Direct Oceania API fetch raised: %s", exc)
+            return None
+        if not result or "error" in result:
+            logger.warning("Direct Oceania API fetch failed: %s", result)
+            return None
+        return result
+
+    async def _dismiss_banners(self, page: Page) -> None:
+        for sel in ("#onetrust-accept-btn-handler", "button:has-text('Accept')",
+                    "button:has-text('I Accept')", "button:has-text('Agree')"):
+            try:
+                await page.click(sel, timeout=1_500)
+                logger.info("Dismissed banner via %s", sel)
+                return
+            except Exception:
+                pass
+
+    async def _log_diagnostics(self, page: Page) -> None:
+        """Log enough about the page to tell a bot-block from an API change."""
+        try:
+            title = await page.title()
+            text = (await page.inner_text("body"))[:500].replace("\n", " ")
+            logger.error("Oceania diagnostics: url=%s title=%r body=%r", page.url, title, text)
+            out = os.getenv("OCEANIA_DEBUG_DIR", "/tmp")
+            await page.screenshot(path=f"{out}/oceania_debug.png")
+            with open(f"{out}/oceania_debug.html", "w") as fh:
+                fh.write(await page.content())
+        except Exception as exc:
+            logger.warning("Could not collect Oceania diagnostics: %s", exc)
 
     # ------------------------------------------------------------------
     # Pagination
