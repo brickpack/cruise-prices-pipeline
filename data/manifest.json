@@ -1,5 +1,6 @@
 {
   "dates": {
+    "2026-11-10": {},
     "2026-11-09": {},
     "2026-11-08": {},
     "2026-11-07": {},
@@ -644,9 +645,9 @@
     },
     "2026-03-03": {}
   },
-  "last_updated": "2026-11-09T14:29:06.322105+00:00",
+  "last_updated": "2026-11-10T13:51:28.441444+00:00",
   "cruise_lines": [
-    "explora_journeys",
-    "oceania_cruises"
+    "oceania_cruises",
+    "explora_journeys"
   ]
 }
